@@ -1,0 +1,418 @@
+\documentclass[12pt,a4paper]{article}
+
+% 中文字体支持
+\usepackage{ctex}
+\usepackage{xeCJK}
+
+% 数学公式支持
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{mathtools}
+\usepackage{bm} % 粗体数学符号
+
+% 图表支持
+\usepackage{graphicx}
+\usepackage{tikz}
+\usepackage{pgfplots}
+\pgfplotsset{compat=1.17}
+
+% 页面布局
+\usepackage{geometry}
+\geometry{left=2.5cm,right=2.5cm,top=3cm,bottom=3cm}
+\usepackage{fancyhdr}
+\usepackage{lastpage}
+
+% 目录和超链接
+\usepackage{hyperref}
+\hypersetup{
+    colorlinks=true,
+    linkcolor=blue,
+    filecolor=magenta,      
+    urlcolor=cyan,
+    citecolor=red
+}
+
+% 代码支持
+\usepackage{listings}
+\usepackage{xcolor}
+
+% 表格支持
+\usepackage{booktabs}
+\usepackage{multirow}
+\usepackage{array}
+
+% 定理环境
+\newtheorem{theorem}{定理}[section]
+\newtheorem{lemma}[theorem]{引理}
+\newtheorem{corollary}[theorem]{推论}
+\newtheorem{proposition}[theorem]{命题}
+\newtheorem{definition}[theorem]{定义}
+\newtheorem{example}[theorem]{例题}
+\newtheorem{exercise}[theorem]{练习}
+
+% 页眉页脚设置
+\setlength{\headheight}{14.5pt}
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{高等电动力学课程总结}
+\fancyhead[R]{\today}
+\fancyfoot[C]{\thepage/\pageref{LastPage}}
+
+% 代码样式设置
+\lstset{
+    basicstyle=\ttfamily\small,
+    keywordstyle=\color{blue}\bfseries,
+    commentstyle=\color{green!60!black},
+    stringstyle=\color{red},
+    showstringspaces=false,
+    numbers=left,
+    numberstyle=\tiny\color{gray},
+    frame=single,
+    breaklines=true
+}
+
+% 文档信息
+\title{高等电动力学课程总结笔记}
+\author{学生姓名}
+\date{\today}
+\begin{document}
+
+\maketitle
+\tableofcontents
+\newpage
+
+% ===== 课程总结主体内容 =====
+
+\section*{课程概述}
+
+\subsection*{课程目标}
+高等电动力学是物理和电子工程专业的重要基础课程，本课程旨在：
+\begin{itemize}
+    \item 深入理解电磁场的基本理论和数学描述
+    \item 掌握电磁波的传播、反射和折射规律
+    \item 学习各种导波系统的特性分析
+    \item 了解运动电荷的场和辐射现象
+\end{itemize}
+
+\subsection*{课程结构}
+本课程共包含13个主要章节，从基础理论到实际应用，系统涵盖了高等电动力学的核心内容。
+
+\section*{数学基础知识}
+\subsection{重要物理常数}
+\begin{itemize}
+    \item 真空介电常数：$\varepsilon_0 = 8.854 \times 10^{-12}$ F/m
+    \item 真空磁导率：$\mu_0 = 4\pi \times 10^{-7}$ H/m
+    \item 光速：$c = \frac{1}{\sqrt{\mu_0 \varepsilon_0}} = 3 \times 10^8$ m/s
+    \item 电子电荷：$e = 1.602 \times 10^{-19}$ C
+    \item 普朗克常数：$h = 6.626 \times 10^{-34}$ J·s
+\end{itemize}
+
+\subsection{矢量分析：参见Jackson书扉页}
+\subsubsection{矢量运算律}
+混合积：
+\begin{align}
+    \mathbf{a\cdot(b \times c)=b \cdot (c \times a)=c \cdot(a \times b)} \\
+\end{align}
+
+三矢量的矢积：
+\begin{align}
+\mathbf{(a\times b)\times c=b(c\cdot a)-a(c\cdot b)} \\
+\mathbf{a\times(b\times c)=b(c\cdot a)-c(a\cdot b)}
+\end{align}
+
+对称点积-叉积混合：
+\begin{align}
+    \mathbf{(a\times b)\cdot(c\times d)=(a\cdot c)(b\cdot d)-(a\cdot d)(b\cdot c)} \\
+\end{align}
+
+\subsection{nabla算符}
+
+\subsection{nabla算符的运算律}
+
+\subsection{偏微分方程}
+
+\subsection{特殊函数}
+\subsubsection{Bessel函数}
+\subsubsection{Legendre多项式}
+
+\subsection{张量代数的基本规则}
+
+
+\section{第一章：基础知识回顾}
+
+\subsection{麦克斯韦方程组}
+\begin{equation}
+    \nabla \cdot \mathbf{E} = \frac{\rho}{\varepsilon_0}
+\end{equation}
+\begin{equation}
+    \nabla \cdot \mathbf{B} = 0
+\end{equation}
+\begin{equation}
+    \nabla \times \mathbf{E} = -\frac{\partial \mathbf{B}}{\partial t}
+\end{equation}
+\begin{equation}
+    \nabla \times \mathbf{B} = \mu_0 \mathbf{J} + \mu_0 \varepsilon_0 \frac{\partial \mathbf{E}}{\partial t}
+\end{equation}
+
+\subsection{边界条件}
+\begin{itemize}
+    \item 电场的切向分量连续：$\mathbf{E}_{1t} = \mathbf{E}_{2t}$
+    \item 磁场的法向分量连续：$\mathbf{B}_{1n} = \mathbf{B}_{2n}$
+    \item 电位移的法向分量：$\mathbf{D}_{2n} - \mathbf{D}_{1n} = \sigma_f$
+    \item 磁场强度的切向分量：$\mathbf{H}_{2t} - \mathbf{H}_{1t} = \mathbf{K}_f$
+\end{itemize}
+
+\section{静电场}
+
+\subsection{静电场的基本性质}
+\subsubsection{泊松方程和拉普拉斯方程}
+\begin{equation}
+    \nabla^2 \phi = -\frac{\rho}{\varepsilon}
+\end{equation}
+
+\subsubsection{静电场的边界条件}
+
+\subsubsection{静电场的能量和能流}
+
+\subsubsection{导体表面和介质界面的静电场}
+
+
+
+\subsection{静电场的求解方法}
+
+
+
+\subsubsection{分离变量法}
+在直角坐标系、柱坐标系和球坐标系中的应用。
+
+\subsubsection{镜像法}
+\begin{itemize}
+    \item 导体平面的镜像法
+    \item 导体球面的镜像法
+    \item 柱状导体的镜像法
+\end{itemize}
+
+\subsubsection{格林函数法}
+
+%\section{第三章：静电场（续）}
+
+\subsubsection{多极展开}
+电势的多极展开表达式：
+\begin{equation}
+    \phi(\mathbf{r}) = \frac{1}{4\pi\varepsilon_0} \sum_{l=0}^{\infty} \frac{1}{r^{l+1}} \sum_{m=-l}^{l} Q_{lm} Y_{lm}(\theta, \phi)
+\end{equation}
+
+\subsection{电偶极子、电四极子}
+高阶多极矩的计算和物理意义。
+
+\section{电磁波}
+
+\subsection{波动方程}
+从麦克斯韦方程组导出的波动方程：
+\begin{equation}
+    \nabla^2 \mathbf{E} - \mu\varepsilon \frac{\partial^2 \mathbf{E}}{\partial t^2} = 0
+\end{equation}
+
+\subsection{平面电磁波}
+\begin{itemize}
+    \item 均匀平面波的传播特性
+    \item 波阻抗和能流密度
+    \item 偏振态的描述
+\end{itemize}
+
+\subsection{电磁波的能量和动量}
+\begin{itemize}
+    \item 能量密度：$u = \frac{1}{2}(\varepsilon E^2 + \mu H^2)$
+    \item 坡印廷矢量：$\mathbf{S} = \mathbf{E} \times \mathbf{H}$
+    \item 动量密度：$\mathbf{g} = \varepsilon \mathbf{E} \times \mathbf{B}$
+\end{itemize}
+
+\section{电磁波的反射和折射}
+
+\subsection{电磁波的边界条件}
+\subsubsection{理想金属边界条件}
+\subsubsection{有损耗金属边界条件}
+\subsubsection{介质交界面条件}
+
+\subsection{斯涅尔定律}
+\begin{equation}
+    n_1 \sin\theta_1 = n_2 \sin\theta_2
+\end{equation}
+
+\subsection{菲涅尔公式}
+\begin{itemize}
+    \item TE波（s偏振）的反射和透射系数
+    \item TM波（p偏振）的反射和透射系数
+    \item 布儒斯特角和全反射现象
+\end{itemize}
+
+\subsection{导波系统简介}
+传输线、波导管等导波系统的基本概念。
+
+\section{波导基本理论}
+\subsection{从麦克斯韦方程组导出的波动方程}
+\subsubsection{直角坐标系的波动方程及其基本解}
+\subsubsection{柱坐标系的波动方程及其基本解}
+
+\subsection{纵向均匀系统的纵横关系}
+
+\subsection{波导的阻抗与功率传输}
+
+\section{几种常见波导}
+
+\subsection{矩形波导}
+
+
+\subsubsection{矩形波导的模式}
+\subsubsection{截止频率和传播特性}
+\subsubsection{TE模式场分布}
+\subsubsection{TM模式场分布}
+
+
+% \subsubsection{波导的传播常数}
+% \begin{equation}
+%     \beta = \sqrt{k^2 - k_c^2}
+% \end{equation}
+
+\subsubsection{波导的阻抗和功率传输}
+
+\subsection{圆波导}
+
+
+\subsubsection{圆波导的模式}
+\subsubsection{截止频率和传播特性}
+\subsubsection{TE模式场分布}
+\subsubsection{TM模式场分布}
+
+
+% \subsubsection{波导的传播常数}
+% \begin{equation}
+%     \beta = \sqrt{k^2 - k_c^2}
+% \end{equation}
+
+\subsubsection{波导的阻抗和功率传输}
+\subsubsection{高阶模式的特性}
+
+\subsection{介质加载波导}
+
+\subsubsection{部分填充介质的波导}
+介质对传播常数的影响。
+
+\subsubsection{特征方程的求解}
+不同边界条件下的特征方程。
+
+\subsection{介质加载圆波导和介质波导}
+
+\subsubsection{介质圆波导}
+\begin{itemize}
+    \item 介质波导的导模条件
+    \item 泄漏模和辐射模
+\end{itemize}
+
+\subsection{光纤原理}
+光在光纤中的传播机制。
+
+\section{谐振腔基础理论}
+
+\subsection{波动方程及其基本解}
+
+\subsection{谐振系统的纵横关系}
+
+\subsubsection{波导的储能与品质因数}
+
+\section{常见谐振腔}
+\subsection{矩形谐振腔}
+\begin{itemize}
+    \item 谐振频率的计算
+    \item 品质因数Q的定义和计算
+    \item 模式的正交性
+\end{itemize}
+
+\subsection{圆柱谐振腔}
+圆柱形谐振腔的谐振特性。
+
+\section{第十一章：谐振腔链和空间谐波}
+
+\subsection{耦合谐振腔}
+多个谐振腔的耦合效应。
+
+\subsection{周期结构}
+\begin{itemize}
+    \item 布洛赫定理
+    \item 色散关系
+    \item 带隙结构
+\end{itemize}
+
+\section{矢势和运动电荷的场}
+
+\subsection{电磁势}
+\begin{itemize}
+    \item 标势$\phi$和矢势$\mathbf{A}$的定义
+    \item 洛伦兹规范条件：$\nabla \cdot \mathbf{A} + \frac{1}{c^2}\frac{\partial \phi}{\partial t} = 0$
+\end{itemize}
+
+\subsection{达朗贝尔方程}
+\begin{equation}
+    \nabla^2 \phi - \frac{1}{c^2}\frac{\partial^2 \phi}{\partial t^2} = -\frac{\rho}{\varepsilon_0}
+\end{equation}
+
+\subsection{李纳-维谢尔势}
+运动电荷产生的电磁势。
+
+\section{运动电荷的场和同步辐射}
+
+\subsection{加速电荷的辐射}
+\begin{itemize}
+    \item 拉莫尔公式
+    \item 相对论性推广
+\end{itemize}
+
+\subsection{同步辐射}
+\begin{itemize}
+    \item 同步辐射的特性
+    \item 角分布和频谱
+    \item 应用领域
+\end{itemize}
+
+\section{重要公式汇总}
+
+\subsection{基本常数}
+\begin{itemize}
+    \item 真空介电常数：$\varepsilon_0 = 8.854 \times 10^{-12}$ F/m
+    \item 真空磁导率：$\mu_0 = 4\pi \times 10^{-7}$ H/m
+    \item 光速：$c = \frac{1}{\sqrt{\mu_0 \varepsilon_0}} = 3 \times 10^8$ m/s
+\end{itemize}
+
+\subsection{常用矢量恒等式}
+\begin{itemize}
+    \item $\nabla \cdot (\nabla \times \mathbf{A}) = 0$
+    \item $\nabla \times (\nabla \phi) = 0$
+    \item $\nabla \times (\nabla \times \mathbf{A}) = \nabla(\nabla \cdot \mathbf{A}) - \nabla^2 \mathbf{A}$
+\end{itemize}
+
+\section{学习建议和复习要点}
+
+\subsection{重点掌握}
+\begin{enumerate}
+    \item 麦克斯韦方程组及其物理意义
+    \item 电磁波的传播特性和边界条件
+    \item 各种导波系统的模式分析
+    \item 运动电荷的辐射特性
+\end{enumerate}
+
+\subsection{学习方法}
+\begin{itemize}
+    \item 理论推导与物理图像相结合
+    \item 多做习题加深理解
+    \item 注意不同坐标系下的数学技巧
+    \item 建立知识框架，融会贯通
+\end{itemize}
+
+% ===== 参考文献部分 =====
+\begin{thebibliography}{99}
+\bibitem{jackson} J.D. Jackson, \emph{Classical Electrodynamics}, 3rd ed., Wiley, 1998.
+\bibitem{griffiths} D.J. Griffiths, \emph{Introduction to Electrodynamics}, 4th ed., Cambridge University Press, 2017.
+\bibitem{guo} 郭硕鸿, \emph{电动力学}, 高等教育出版社, 2008.
+\bibitem{born} M. Born and E. Wolf, \emph{Principles of Optics}, 7th ed., Cambridge University Press, 1999.
+\end{thebibliography}
+
+\end{document}
