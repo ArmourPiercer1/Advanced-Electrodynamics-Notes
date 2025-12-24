@@ -1,4 +1,4 @@
-This is XeTeX, Version 3.141592653-2.6-0.999997 (TeX Live 2025) (preloaded format=xelatex 2025.4.10)  24 DEC 2025 17:18
+This is XeTeX, Version 3.141592653-2.6-0.999997 (TeX Live 2025) (preloaded format=xelatex 2025.4.10)  24 DEC 2025 20:02
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -925,13 +925,13 @@ File: umsb.fd 2013/01/14 v3.01 AMS symbols B
 
 ]
 
-[2])
+[2]
+
+[3])
 \tf@toc=\write5
 \openout5 = `高等电动力学课程总结.toc'.
 
 
-
-[3]
 
 [4]
 
@@ -944,6 +944,11 @@ File: umsb.fd 2013/01/14 v3.01 AMS symbols B
 [8]
 
 [9]
+Overfull \hbox (3.10106pt too wide) detected at line 300
+[]
+ []
+
+
 
 [10]
 
@@ -951,7 +956,19 @@ File: umsb.fd 2013/01/14 v3.01 AMS symbols B
 
 [12]
 
-[13] 
+[13]
+
+[14]
+
+[15]
+
+[16]
+
+[17]
+
+[18]
+
+[19] 
 enddocument/afterlastpage (AED): lastpage setting LastPage.
 (./高等电动力学课程总结.aux)
  ***********
@@ -959,15 +976,15 @@ LaTeX2e <2024-11-01> patch level 2
 L3 programming layer <2022/08/05>
  ***********
 Package rerunfilecheck Info: File `高等电动力学课程总结.out' has not changed.
-(rerunfilecheck)             Checksum: 005F6CF73645A82DA6FF41D7CB13E622;10026.
+(rerunfilecheck)             Checksum: 933C6B682C7C784B49CF2C9DFBD56B6C;12122.
  ) 
 Here is how much of TeX's memory you used:
- 38362 strings out of 473832
- 933868 string characters out of 5733158
- 1441272 words of memory out of 5000000
- 60794 multiletter control sequences out of 15000+600000
- 573856 words of font info for 117 fonts, out of 8000000 for 9000
+ 38493 strings out of 473832
+ 940961 string characters out of 5733158
+ 1443548 words of memory out of 5000000
+ 60923 multiletter control sequences out of 15000+600000
+ 573872 words of font info for 119 fonts, out of 8000000 for 9000
  1348 hyphenation exceptions out of 8191
- 93i,12n,111p,727b,479s stack positions out of 10000i,1000n,20000p,200000b,200000s
+ 93i,12n,111p,727b,483s stack positions out of 10000i,1000n,20000p,200000b,200000s
 
-Output written on 高等电动力学课程总结.pdf (13 pages).
+Output written on 高等电动力学课程总结.pdf (19 pages).

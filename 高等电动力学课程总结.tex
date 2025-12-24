@@ -125,12 +125,22 @@
 \end{align}
 
 \subsection{nabla算符}
+\subsubsection{各种坐标系下的nabla算符展开}
 
-\subsection{nabla算符的运算律}
+\subsection{nabla算符与矢量积的运算律}
+\begin{align}
+    \nabla\frac{1}{r}=-\frac{\mathbf{r}}{r^3}\\
+    \nabla^2\left(\frac{1}{r}\right) = -4\pi \delta(\mathbf{r})
+\end{align}
 
 \subsection{偏微分方程}
 
 \subsection{特殊函数}
+\subsubsection{delta函数}
+\begin{align}
+    \int f(x)\delta'(x-a)= -f'(a)\\
+    \delta (f(x))=\sum_i\frac{1}{\left|f'(x_i)\right|}\delta(x-x_i)
+\end{align}
 \subsubsection{Bessel函数}
 \subsubsection{Legendre多项式}
 
@@ -162,22 +172,86 @@
 \end{itemize}
 
 \section{静电场}
+电场与电势：
+\begin{align}
+    \mathbf{E} = -\nabla \phi
+\end{align}
+
 
 \subsection{静电场的基本性质}
+\subsubsection{叠加原理}
+\begin{align}
+    \mathbf{E}(\mathbf{r}) =& \frac{1}{4\pi\varepsilon_0} \int \frac{\rho(\mathbf{r}')(\mathbf{r}-\mathbf{r}')}{|\mathbf{r}-\mathbf{r}'|^3} dV'\\
+    \phi(\mathbf{r}) =& \frac{1}{4\pi\varepsilon_0} \int \frac{\rho(\mathbf{r}')}{|\mathbf{r}-\mathbf{r}'|} dV'
+\end{align}
+
+
 \subsubsection{泊松方程和拉普拉斯方程}
 \begin{equation}
     \nabla^2 \phi = -\frac{\rho}{\varepsilon}
 \end{equation}
+\subsection{高斯定理}
+积分形式：
+\begin{align}
+    \oint_{S} \mathbf{E} \cdot d\mathbf{A} = \frac{Q_{\text{enc}}}{\varepsilon_0}
+\end{align}
+微分形式：
+\begin{align}
+    \nabla \cdot \mathbf{E} = \frac{\rho}{\varepsilon_0}
+\end{align}
 
 \subsubsection{静电场的边界条件}
+1、面电荷两侧：电场和电位移矢量的切向分量连续，法向分量有跳变：
+\begin{align}
+    \mathbf{E}_{1t} = \mathbf{E}_{2t} \\
+    \mathbf{D}_{2n} - \mathbf{D}_{1n} = \sigma_f
+\end{align}
 
-\subsubsection{静电场的能量和能流}
+2、偶电层两侧：电势有跳变
+\begin{align}
+    \phi_2 - \phi_1 = \frac{D}{\varepsilon_0}
+\end{align}
+
+\subsubsection{静电场的能量}
+点电荷场：
+\begin{align}
+    W = \frac{1}{2} \sum_{i} q_i \phi(\mathbf{r}_i)
+\end{align}
+
+体电荷场：
+\begin{align}
+    W=&\frac{1}{8\pi\varepsilon_0} \int \int \frac{\rho(\mathbf{r}) \rho(\mathbf{r}')}{|\mathbf{r}-\mathbf{r}'|} dV dV'\\
+    =&\frac{1}{2} \int \rho(\mathbf{r}) \phi(\mathbf{r}) dV\\
+    =&-\frac{\varepsilon_0}{2}\int \phi\nabla^2\phi dV\\
+    =&\frac{\varepsilon_0}{2}\int |\nabla \phi|^2 dV\\
+    =&\frac{\varepsilon_0}{2}\int |\mathbf{E}|^2 dV
+\end{align}
+
+能量密度
+\begin{align}
+    w=\frac{1}{2} \varepsilon_0 |\mathbf{E}|^2
+\end{align}
+
 
 \subsubsection{导体表面和介质界面的静电场}
+对于导体表面的静电荷场：
+\begin{align}
+    \sigma=-\varepsilon_0\frac{\partial \Phi}{\partial n}
+\end{align}
+式中，$\Phi$为真空区的电势。
 
+导体表面受到的静电压强：
+\begin{align}
+    \mathbf{P}=\frac{1}{2} \sigma E_n \mathbf{n}=\frac{1}{2} \varepsilon_0 E_n^2 \mathbf{n}
+\end{align}
 
 
 \subsection{静电场的求解方法}
+各种不同方法的基础：唯一性定理
+\begin{theorem}[唯一性定理]
+    \item 假设区域V内给定电荷分布，区域V的边界S上给定电势或者$\partial \phi/\partial n$，则区域V内的电势$\phi$唯一确定。
+    \item 假设区域V内有一些导体，导体之外的电荷分布已知，导体上的总电荷已知，区域的边界上电势$\Phi$或者$\partial \phi/\partial n$已知，则区域V内的电势$\phi$唯一确定。
+\end{theorem}
 
 
 
@@ -191,9 +265,40 @@
     \item 柱状导体的镜像法
 \end{itemize}
 
-\subsubsection{格林函数法}
+\subsubsection{格林函数法（需要进一步加深理解）}
 
-%\section{第三章：静电场（续）}
+\begin{theorem}[格林恒等式]
+    \begin{align}
+    \int_V \left(\phi \nabla^2 \psi + \nabla \phi \cdot \nabla \psi\right) dV = \oint_S \phi \frac{\partial \psi}{\partial n} dS
+    \end{align}
+    
+    \begin{align}
+    \int_V \left(\phi \nabla^2 \psi - \psi \nabla^2 \phi\right) dV = \oint_S \left(\phi \frac{\partial \psi}{\partial n} - \psi \frac{\partial \phi}{\partial n}\right) dS
+    \end{align}
+\end{theorem}
+
+对任意确定的边值问题，我们想找到的格林函数总是满足如下方程：
+\begin{equation}
+    \nabla^2 G(\mathbf{r}, \mathbf{r}') = -4\pi \delta(\mathbf{r} - \mathbf{r}')
+\end{equation}
+边界条件：
+\begin{itemize}
+    \item 第一类边界条件（Dirichlet边界条件）：$G(\mathbf{r}, \mathbf{r}') = 0$，当$\mathbf{r}'$在边界$S$上时
+    \item 第二类边界条件（Neumann边界条件）：$\frac{\partial G(\mathbf{r}, \mathbf{r}')}{\partial n'} = -\frac{4\pi}{S}$，当$\mathbf{r}'$在边界$S$上时
+\end{itemize}
+
+则对于任意给定的格林函数$G (\mathbf{r}, \mathbf{r}')$，静电势的解为：
+\begin{align*}
+    \phi(\mathbf{r}) =& \frac{1}{4\pi\varepsilon_0} \int_V \rho(\mathbf{r}') G(\mathbf{r}, \mathbf{r}') dV' 
+    + \frac{1}{4\pi} \oint_S \left( G(\mathbf{r}, \mathbf{r}') 
+    \frac{\partial \phi}{\partial n'} - \phi(\mathbf{r}') 
+    \frac{\partial G(\mathbf{r}, \mathbf{r}')}{\partial n'} \right) dS'\\ \\
+    =&\frac{1}{4\pi\varepsilon_0} \int_V \rho(\mathbf{r}') G_D(\mathbf{r}, \mathbf{r}') dV'
+    + \frac{1}{4\pi} \oint_S \phi(\mathbf{r}') \frac{\partial G_D(\mathbf{r}, \mathbf{r}')}{\partial n'} dS' \quad \text{（Dirichlet边界条件）}\\ \\
+    =&\langle\phi\rangle_S+\frac{1}{4\pi\varepsilon_0} \int_V \rho(\mathbf{r}') G_N(\mathbf{r}, \mathbf{r}') dV'
+     + \frac{1}{4\pi} \oint_S G_N(\mathbf{r}, \mathbf{r}') \frac{\partial \phi}{\partial n'} dS' \quad \text{（Neumann边界条件）}
+\end{align*}
+
 
 \subsubsection{多极展开}
 电势的多极展开表达式：
@@ -203,6 +308,76 @@
 
 \subsection{电偶极子、电四极子}
 高阶多极矩的计算和物理意义。
+
+
+
+\section{静磁场}
+\subsection{静磁场的基本性质}
+\subsubsection{比奥-萨伐尔定律}
+\begin{equation}
+    \mathbf{B}(\mathbf{r}) = \frac{\mu_0}{4\pi} \int \frac{\mathbf{J}(\mathbf{r}') \times (\mathbf{r} - \mathbf{r}')}{|\mathbf{r} - \mathbf{r}'|^3} dV'
+\end{equation}
+\subsubsection{安培环路定理}
+积分形式：
+\begin{align}
+    \oint_{C} \mathbf{B} \cdot d\mathbf{l} = \mu_0 I_{\text{enc}}
+\end{align}
+微分形式：
+\begin{align}
+    \nabla \times \mathbf{B} = \mu_0 \mathbf{J}
+\end{align}
+\subsubsection{磁矢势}
+\begin{equation}
+    \mathbf{B} = \nabla \times \mathbf{A}
+\end{equation}
+\begin{equation}
+    \mathbf{A}(\mathbf{r}) = \frac{\mu_0}{4\pi} \int \frac{\mathbf{J}(\mathbf{r}')}{|\mathbf{r} - \mathbf{r}'|} dV'
+\end{equation}
+\subsection{磁介质中的静磁场}
+\subsubsection{磁化强度和磁极化强度}
+\begin{align}
+    \mathbf{M} = \frac{\text{磁矩}}{\text{体积}}
+\end{align}
+\subsubsection{磁场强度}
+\begin{align}
+    \mathbf{H} = \frac{1}{\mu_0} \mathbf{B} - \mathbf{M}
+\end{align}
+\subsubsection{磁介质中的边界条件}
+\begin{align}
+    \mathbf{B}_{1n} = \mathbf{B}_{2n} \\
+    \mathbf{H}_{2t} - \mathbf{H}_{1t} = \mathbf{K}_f
+\end{align}
+\subsection{静磁场的能量}
+\begin{align}
+    W = \frac{1}{2} \int \mathbf{J} \cdot \mathbf{A} dV
+\end{align}
+\begin{align}
+    W = \frac{1}{2\mu_0} \int |\mathbf{B}|^2 dV
+\end{align}
+
+
+\section{电磁场的基本性质}
+\subsection{能量与能流}
+\begin{itemize}
+    \item 电磁场的能量密度：$u = \frac{1}{2}(\varepsilon E^2 + \frac{1}{\mu} B^2)$
+    \item 坡印廷矢量：$\mathbf{S} = \mathbf{E} \times \mathbf{H}$
+    \item 能量守恒方程：$\frac{\partial u}{\partial t} + \nabla \cdot \mathbf{S} = -\mathbf{J} \cdot \mathbf{E}$
+\end{itemize}
+
+\subsection{动量}
+\begin{itemize}
+    \item 电磁场的动量密度：$\mathbf{g} = \varepsilon \mathbf{E} \times \mathbf{B}$
+    \item 电磁力密度：$\mathbf{f} = \rho \mathbf{E} + \mathbf{J} \times \mathbf{B}$
+    \item 动量守恒方程：$\frac{\partial \mathbf{g}}{\partial t} + \nabla \cdot \mathbf{T} = -\mathbf{f}$
+\end{itemize}
+
+\subsection{角动量}
+\begin{itemize}
+    \item 电磁场的角动量密度：$\mathbf{l} = \mathbf{r} \times \mathbf{g}$
+    \item 角动量守恒方程：$\frac{\partial \mathbf{l}}{\partial t} + \nabla \cdot \mathbf{M} = -\mathbf{r} \times \mathbf{f}$
+    \item 角动量密度张量：$\mathbf{M} = \mathbf{r} \times \mathbf{T}$
+\end{itemize}
+
 
 \section{电磁波}
 
