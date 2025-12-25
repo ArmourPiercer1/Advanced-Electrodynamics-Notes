@@ -97,13 +97,20 @@
 本课程共包含13个主要章节，从基础理论到实际应用，系统涵盖了高等电动力学的核心内容。
 
 \section*{数学基础知识}
-\subsection{重要物理常数}
+\subsection{重要常数}
+
+物理常数
 \begin{itemize}
     \item 真空介电常数：$\varepsilon_0 = 8.854 \times 10^{-12}$ F/m
     \item 真空磁导率：$\mu_0 = 4\pi \times 10^{-7}$ H/m
     \item 光速：$c = \frac{1}{\sqrt{\mu_0 \varepsilon_0}} = 3 \times 10^8$ m/s
     \item 电子电荷：$e = 1.602 \times 10^{-19}$ C
     \item 普朗克常数：$h = 6.626 \times 10^{-34}$ J·s
+\end{itemize}
+
+材料参数
+\begin{itemize}
+    \item 铜的电导率$\sigma_{Cu} = 5.8 \times 10^7$ S/m
 \end{itemize}
 
 \subsection{矢量分析：参见Jackson书扉页}
@@ -387,12 +394,95 @@
     \nabla^2 \mathbf{E} - \mu\varepsilon \frac{\partial^2 \mathbf{E}}{\partial t^2} = 0
 \end{equation}
 
+
+对于单色波，导出Helmholtz方程：
+\begin{align}
+    \nabla^2 \mathbf{E} + k^2 \mathbf{E} = 0 \\
+    \nabla^2 \mathbf{H} + k^2 \mathbf{H} = 0
+\end{align}
+式中，$k = \omega \sqrt{\mu\varepsilon}$为波数。
+
+
 \subsection{平面电磁波}
+最简单情况：均匀平面波电场矢量沿x方向，波沿z方向传播
+
+方程组：
+\begin{align}
+    \frac{\partial^2 E_x}{\partial z^2} + \omega^2 \mu \varepsilon E_x = 0 \\
+    E_x=E_+e^{ikz}+E_-e^{-ikz}
+\end{align}
+磁场 
+\begin{align}
+    \mathbf{H}=\frac{1}{\eta}Ee^{ikz}\hat{y}
+\end{align}
+式中，$\eta = \sqrt{\frac{\mu}{\varepsilon}}$为波阻抗。
+
+\textbf{重要概念}：
 \begin{itemize}
-    \item 均匀平面波的传播特性
-    \item 波阻抗和能流密度
-    \item 偏振态的描述
+    \item 波阵面：空间中相位相同的点构成的曲面，即等相位面
+    \item 平面波：等相位面为无限大平面的电磁波
+    \item 相速度：电磁波的等相位面在空间中的移动速度,$v_p=\omega/k$
+    \item 群速度：电磁波中能量和信息传递的速度, $v_g=\mathrm{d}\omega/\mathrm{d}k$
 \end{itemize}
+
+\subsubsection{电磁场关系}
+均匀平面波的电磁场关系:
+    
+    \begin{align}
+        \mathbf{E} =& \eta\cdot\mathbf{H}\times \hat{\mathbf{n}} \\
+        \mathbf{H} =& \frac{1}{\eta}\cdot\hat{\mathbf{n}}\times \mathbf{E}
+    \end{align}
+    即：$\mathbf{E,H,\hat{n}}$三者互相垂直，构成右手系。
+
+\subsubsection{波阻抗}
+\begin{align}
+        \eta = \frac{E}{H} = \sqrt{\frac{\mu}{\varepsilon}}
+    \end{align}
+    真空波阻抗
+    \begin{align}
+        \eta_0 = \sqrt{\frac{\mu_0}{\varepsilon_0}} =120\pi\Omega \approx 377 \Omega
+    \end{align}
+
+\subsubsection{能量密度与能流密度}
+能量密度：理想媒质中均匀平面波的电场能量等于磁场能量
+\begin{itemize}
+    \item 电场能量密度：$u_E = \frac{1}{2} \varepsilon E^2$
+    \item 磁场能量密度：$u_H = \frac{1}{2} \mu H^2=\frac{1}{2}\varepsilon E^2$
+    \item 总能量密度：$u = u_E + u_H = \varepsilon E^2$
+\end{itemize}
+
+能流密度：
+\begin{align}
+    \mathbf{S} = \mathbf{E} \times \mathbf{H}=\frac{1}{\eta}|\mathbf{E}|^2\mathbf{n}
+\end{align}
+
+电磁波的能量传播速度：
+\begin{align}
+    v=\frac{|\mathbf{S}|}{u}   = \frac{1}{\sqrt{\mu\varepsilon}} 
+\end{align}
+
+\subsubsection{复数形式表达}
+复数表示的场：
+\begin{align}
+    \mathbf{E}(\mathbf{r},t) =& \mathrm{Re}\{\dot{\mathbf{E}}(\mathbf{r})e^{-i\omega t}\} \\
+    \mathbf{H}(\mathbf{r},t) =& \mathrm{Re}\{\dot{\mathbf{H}}(\mathbf{r})e^{-i\omega t}\}
+\end{align}
+
+复坡印廷矢量：
+\begin{align}
+    \dot{\mathbf{S}} = \frac{1}{2} \dot{\mathbf{E}} \times \dot{\mathbf{H}}^*
+\end{align}
+
+复数表示和实际物理量关系：
+\begin{align}
+    \mathbf{E}(\mathbf{r},t) =& \mathrm{Re}\{\dot{\mathbf{E}}(\mathbf{r})e^{-i\omega t}\} \\
+    \mathbf{H}(\mathbf{r},t) =& \mathrm{Re}\{\dot{\mathbf{H}}(\mathbf{r})e^{-i\omega t}\}\\
+    \mathbf{S}(\mathbf{r},t) =& \frac{1}{2}\mathrm{Re}\{\dot{\mathbf{E}} \times \dot{\mathbf{H}}^*
+    +  \dot{\mathbf{E}}\times \dot{\mathbf{H}}e^{-i2\omega t}\}\\
+    \langle \mathbf{S} \rangle =& \frac{1}{2}\mathrm{Re}\{\dot{\mathbf{S}}\}
+\end{align}
+
+即：复坡印廷矢量的实部为平均功率流密度，虚部为磁场和电场之间能量转换的无功功率流密度。
 
 \subsection{电磁波的能量和动量}
 \begin{itemize}
@@ -401,7 +491,152 @@
     \item 动量密度：$\mathbf{g} = \varepsilon \mathbf{E} \times \mathbf{B}$
 \end{itemize}
 
-\section{电磁波的反射和折射}
+\subsection{平面电磁波的传播}
+
+\subsubsection{理想介质}
+\begin{itemize}
+    \item 电场、磁场、传播方向之间相互垂直，是横电磁波
+    \item 无衰减，电场与磁场振幅不变
+    \item 波阻抗为实数，电场与磁场同相位
+    \item 电磁波的相速度与频率无关，即无色散
+    \item 电场能量密度等于磁场能量密度
+    \item 能量的传输速度等于相速度
+\end{itemize}
+
+\subsubsection{导电媒质}
+
+特征：电导率$\sigma \neq 0$，会引发传导电流$J=\sigma E$
+
+\textbf{复介电常数理论}
+
+定义一个复介电常数
+\begin{align}
+    \varepsilon_c=\varepsilon + i\frac{\sigma}{\omega}
+\end{align}
+对应地得到复的波数：
+\begin{align}
+    k_c=\omega \sqrt{\mu \varepsilon_c}
+\end{align}
+并引入衰减常数$\alpha[Np/m]$、相位常数$\beta[rad/m]$和电磁波的传播常数$\gamma[1/m]$：
+\begin{align}
+    k_c=i\gamma=\beta+i\alpha
+\end{align}
+
+导电媒质中的波动方程：
+\begin{align}
+    &\nabla^2\mathbf{E}+k_c^2\mathbf{E}=0\\
+    &\nabla^2\mathbf{H}+k_c^2\mathbf{H}=0\\
+    &k_c^2=\omega^2\mu\varepsilon_c=\omega^2\mu\varepsilon+i\omega\mu\sigma
+\end{align}
+平面波解：
+\begin{align}
+    \dot{\mathbf{E}}(z,t)=&E_{xm} e^{-\alpha z}e^{i \beta z}\hat{\mathbf{x}}\\
+    \dot{\mathbf{H}}(z,t)=&\frac{1}{|\eta_c|}e^{i\phi}E_{xm} e^{-\alpha z}e^{i \beta z}\hat{\mathbf{y}}
+\end{align}
+注意，此时电磁场不再同相位：导电媒质本征阻抗此时为复数，\textbf{电场超前磁场相位}$\phi$：
+\begin{align}
+    \eta_c=\sqrt{\frac{\mu}{\varepsilon_c}}=|\eta_c|e^{-i\phi}
+\end{align}
+
+
+\textbf{平面波的传播特性}
+\begin{itemize}
+    \item 三个传播参数：
+    
+    由$k_c^2=\omega^2\mu\varepsilon+i\omega\mu\sigma$，可解出$\alpha$和$\beta$：
+
+    \begin{align}
+        \alpha=&\omega\sqrt{\frac{\mu\varepsilon}{2}}\sqrt{\sqrt{1+\left(\frac{\sigma}{\omega\varepsilon}\right)^2}-1}\\
+        \beta=&\omega\sqrt{\frac{\mu\varepsilon}{2}}\sqrt{\sqrt{1+\left(\frac{\sigma}{\omega\varepsilon}\right)^2}+1}
+    \end{align}
+    此时$\alpha$，$\beta$和$\gamma$均与频率有关，表现出色散特性
+    \item 相速度：与频率有关，是色散波。一般来讲，导电系数越大，色散越强。
+    \begin{align}
+        v_p=\frac{\omega}{\beta(\omega)}
+    \end{align}
+    \item 电磁场关系
+    
+    （1）仍通过波阻抗联系：
+    \begin{align}
+        \mathbf{E} =& \eta_c \cdot \mathbf{H} \times \hat{\mathbf{n}}=|\eta_c|e^{-i\phi}\cdot \mathbf{H} \times \hat{\mathbf{n}} \\
+        \mathbf{H} =& \frac{1}{\eta_c} \cdot \hat{\mathbf{n}} \times \mathbf{E}=\frac{1}{|\eta_c|}e^{i\phi} \cdot \hat{\mathbf{n}} \times \mathbf{E}
+    \end{align}
+
+    （2）E、H、n三者仍互相垂直，构成右手系
+    
+    （3）电场超前相位$\phi=\dfrac{1}{2}\arctan \dfrac{\sigma}{\omega\varepsilon}$
+    \begin{align}
+        \eta_c=|\eta_c|e^{-i\frac{1}{2}\arctan \frac{\sigma}{\omega\varepsilon}}
+    \end{align}
+
+    \item 能量密度
+    
+    
+    \begin{align}
+        w_e=&\frac{1}{2}\varepsilon |E|^2=\frac{\varepsilon}{2}E_{xm}^2  e^{-2\alpha z}  \cos^2(\omega t - \beta z)\\
+        w_m=&\frac{1}{2}\mu |H|^2=\frac{\mu}{2}\frac{E_{xm}^2}{|\eta_c|^2} e^{-2\alpha z} \cos^2(\omega t - \beta z + \phi)\\
+        =&\frac{\varepsilon}{2}E_{xm}^2  e^{-2\alpha z}  \cos^2(\omega t - \beta z) \left[ 1+\left(\frac{\sigma}{\omega\varepsilon}\right)^2\right] ^{1/2}\\
+        =& w_e   \left[ 1+\left(\frac{\sigma}{\omega\varepsilon}\right)^2\right] ^{1/2}
+    \end{align}
+
+    结论：导电媒质中均匀平面波的磁场能量大于电场能量
+
+    \item 能流密度：衰减快于场的衰减
+    \begin{align}
+        \mathbf{S}_{ave}=\frac{1}{2}\mathrm{Re}[\dot{\mathbf{E}}\times \dot{\mathbf{H}}^*]=&\frac{1}{2} \frac{E_{xm}^2}{|\eta_c|} e^{-2\alpha z} \cos \phi\, \hat{\mathbf{n}}\\
+    \end{align}
+\end{itemize}
+
+\textcolor{red}{良导体近似}
+
+在良导体中，$\sigma \gg \omega \varepsilon$，则有近似关系：
+\begin{align}
+    \alpha \approx& \beta \approx \sqrt{\frac{\omega \mu \sigma}{2}}=\sqrt{\pi f\mu\sigma}\\
+\end{align}
+
+于是传播性质简化为：
+\begin{itemize}
+    \item 相速度：$v_p=\dfrac{\omega}{\beta}=\sqrt{\dfrac{2\omega}{\mu\sigma}}=\sqrt{\dfrac{4\pi f}{\mu\sigma}}$
+    \item 波长：$\lambda=\dfrac{2\pi}{\beta}=2\sqrt{\dfrac{\pi}{f\mu\sigma}}=2\pi\sqrt{\dfrac{2}{\omega \mu\sigma}}$
+    \item 波阻抗：$|\eta_c|=\sqrt{\dfrac{\omega \mu}{2\sigma}}$
+    \item 电磁场相位差：$\phi=\dfrac{\pi}{4}$
+    \item 能量密度：$w_m \approx w_e \dfrac{\sigma}{\omega \varepsilon} \gg w_e$
+    \item 能流密度：$\mathbf{S}_{ave}=\dfrac{1}{2} \frac{E_{xm}^2}{|\eta_c|} e^{-2\alpha z} \dfrac{\sqrt{2}}{2}\, \hat{\mathbf{n}}$
+\end{itemize}
+
+\textbf{\textcolor{blue}{重要概念：趋肤深度}}
+
+定义：电磁波穿入良导体时，当波的幅度下降为表面处振幅的$1/e$时，波在良导体中传播的距离
+
+\begin{align}
+    \delta=\frac{1}{\alpha}=\sqrt{\frac{2}{\omega \mu \sigma}}=\sqrt{\frac{1}{\pi f \mu \sigma}}
+\end{align}
+
+对良导体，有$\delta = 1/\alpha = 1/\beta = \lambda / 2\pi$
+
+\textcolor{red}{弱导体近似}
+\begin{align}
+    \alpha \approx& \frac{\sigma}{2} \sqrt{\frac{\mu}{\varepsilon}}\\
+    \beta \approx& \omega \sqrt{\mu \varepsilon}\\
+    \eta_c\approx & \sqrt{\frac{\mu}{\varepsilon}}\left(1 + i \frac{\sigma}{2\omega\varepsilon}\right)
+\end{align}
+\begin{itemize}
+    \item 衰减较小
+    \item 相位常数和非导电媒质中基本相等
+    \item 电场和磁场之间相位差很小
+\end{itemize}
+
+
+ \section{电磁波的反射和折射}
+
+ 计算框架：
+ \begin{itemize}
+    \item 写出入射波、反射波、透射波各分量的场表达式
+    \item 应用边界条件，列出方程
+    \item 解方程，得到反射系数和透射系数
+ \end{itemize}
+
+
 
 \subsection{电磁波的边界条件}
 \subsubsection{理想金属边界条件}
