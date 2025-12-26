@@ -637,9 +637,15 @@
  \end{itemize}
 
  \subsection{边界条件}
-    (1) 场强条件：电场和磁场的切向分量在边界上连续
+    (1) 场强条件：
+    
+        \qquad (a)电场的切向分量、磁场的法向分量在边界上连续；
 
-    需注意：区分极化方向；总的电磁场是所有波的叠加
+        \qquad (b)对于理想介质交界面，电场的法向分量、磁场的切向分量在边界上均连续，因为这一交界面上不存在面电流。
+
+    \qquad (c) 需注意：区分极化方向；总的电磁场是所有波的叠加
+
+    理想介质交界面条件：
     \begin{align}
         E_{ix}+E_{rx}=&E_{tx+}+E_{tx-}\\
         E_{iy}+E_{ry}=&E_{ty+}+E_{ty-}\\
@@ -761,15 +767,73 @@
 \end{align}
 衰减长度$\delta=k_1\sqrt{\sin^2\theta_i-\sin^2\theta_c}$
 
+Note：衰减的透射波会引发Goos-Hänchen位移现象。
+
 
 \section{波导基本理论}
 \subsection{从麦克斯韦方程组导出的波动方程}
+Helmholtz方程：
+\begin{align}
+    \nabla^2 \mathbf{E} + k^2 \mathbf{E} = 0 \\
+    \nabla^2 \mathbf{H} + k^2 \mathbf{H} = 0
+\end{align}
+式中，$k = \omega \sqrt{\mu\varepsilon}$为波数。
+
 \subsubsection{直角坐标系的波动方程及其基本解}
+
+
 \subsubsection{柱坐标系的波动方程及其基本解}
+
 
 \subsection{纵向均匀系统的纵横关系}
 
+
+考虑沿z方向均匀的波导，电磁场可表示为：
+\begin{align}
+    \mathbf{E}(x,y,z)=\mathbf{E}_t(x,y)e^{-ik_z z}+ \hat{\mathbf{z}} E_z(x,y)e^{-ik_z z}\\
+    \mathbf{H}(x,y,z)=\mathbf{H}_t(x,y)e^{-ik_z z}+ \hat{\mathbf{z}} H_z(x,y)e^{-ik_z z}
+\end{align}
+从Helmholtz方程出发，得到横向场与纵向场的关系：
+\begin{align}
+    \mathbf{E}_t=&\frac{i}{\mu\varepsilon\omega^2-k_z^2}\left( k_z \nabla_t E_z + \omega \mu \hat{\mathbf{z}} \times \nabla_t H_z \right)\\
+    \mathbf{H}_t=&\frac{i}{\mu\varepsilon\omega^2-k_z^2}\left( k_z \nabla_t H_z - \omega \varepsilon \hat{\mathbf{z}} \times \nabla_t E_z \right)
+\end{align}
+
+或者磁场用B表示：
+\begin{align}
+    \mathbf{E}_t=&\frac{i}{\mu\varepsilon\omega^2-k_z^2}\left( k_z \nabla_t E_z + \omega \hat{\mathbf{z}} \times \nabla_t B_z \right)\\
+    \mathbf{B}_t=&\frac{i}{\mu\varepsilon\omega^2-k_z^2}\left( k_z \nabla_t B_z - \omega \mu \varepsilon \hat{\mathbf{z}} \times \nabla_t E_z \right)
+\end{align}
+
+\subsection{纵向均匀系统的模式}
+\begin{itemize}
+    \item TEM模：$E_z=0,H_z=0$，横向电磁波，不能在单导体波导中存在
+    \item TE模：$E_z=0,H_z\neq0$，横电波
+    \item TM模：$H_z=0,E_z\neq0$，横磁波
+\end{itemize}
+
+
 \subsection{波导的阻抗与功率传输}
+传输功率
+\begin{align}
+    P=&\begin{cases}
+        \dfrac{\omega\mu k_z}{2k_c^2}\int_S |H_z|^2 \mathrm{d}S & \text{TE模}\\
+        \dfrac{\omega\varepsilon k_z}{2k_c^2}\int_S |E_z|^2 \mathrm{d}S & \text{TM模} 
+    \end{cases}
+\end{align}
+式中，$k_c^2=k^2-k_z^2$为截止波数。
+
+功率衰减
+\begin{align}
+    -\frac{\mathrm{d}P}{\mathrm{d}z}=\frac{1}{2\sigma\delta}|\mathbf{H}_t|^2\mathrm{d}l
+\end{align}
+Note: $R_s=1/\sigma\delta$为表面电阻，$\delta=\sqrt{2/\omega \mu \sigma}$为趋肤深度。
+
+衰减常数
+\begin{align}
+    \alpha=-\frac{1}{2P}\frac{\mathrm{d}P}{\mathrm{d}z}
+\end{align}
+
 
 \section{几种常见波导}
 
@@ -782,10 +846,7 @@
 \subsubsection{TM模式场分布}
 
 
-% \subsubsection{波导的传播常数}
-% \begin{equation}
-%     \beta = \sqrt{k^2 - k_c^2}
-% \end{equation}
+
 
 \subsubsection{波导的阻抗和功率传输}
 
@@ -798,10 +859,7 @@
 \subsubsection{TM模式场分布}
 
 
-% \subsubsection{波导的传播常数}
-% \begin{equation}
-%     \beta = \sqrt{k^2 - k_c^2}
-% \end{equation}
+
 
 \subsubsection{波导的阻抗和功率传输}
 \subsubsection{高阶模式的特性}
