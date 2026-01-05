@@ -1,4 +1,4 @@
-\documentclass[12pt,a4paper]{article}
+\documentclass{article}
 
 % 中文字体支持
 \usepackage{ctex}
@@ -14,6 +14,7 @@
 \usepackage{tikz}
 \usepackage{pgfplots}
 \pgfplotsset{compat=1.17}
+\usepackage{float}
 
 % 页面布局
 \usepackage{geometry}
@@ -74,6 +75,8 @@
 \title{高等电动力学课程总结笔记}
 \author{学生姓名}
 \date{\today}
+
+
 \begin{document}
 
 \maketitle
@@ -149,9 +152,31 @@
     \delta (f(x))=\sum_i\frac{1}{\left|f'(x_i)\right|}\delta(x-x_i)
 \end{align}
 \subsubsection{Bessel函数}
+
+\begin{itemize}
+    \item 重要积分规律：若$a$为$J_n(k_cr)$或$J_n'(k_cr)$的零点，则有
+    \begin{align}
+        \int_0^a J_n^2(k_cr)rdr=\int_0^a J_n'^2(k_cr)rdr=\frac{a^2}{2}[J_n'^2(k_ca)+J_n^2(k_ca)]
+    \end{align}
+\end{itemize}
+
+
+
 \subsubsection{Legendre多项式}
 
 \subsection{张量代数的基本规则}
+
+\subsection{材料性质参数计算}
+\begin{itemize}
+    \item 趋肤深度
+    \begin{align}
+        \delta = \sqrt{\frac{2}{\omega \mu \sigma}}
+    \end{align}
+    \item 表面电阻
+    \begin{align}
+        R_s=\frac{1}{\sigma \delta}=\sqrt{\frac{\omega \mu}{2 \sigma}}
+    \end{align}
+\end{itemize}
 
 
 \section{第一章：基础知识回顾}
@@ -507,7 +532,7 @@
 
 特征：电导率$\sigma \neq 0$，会引发传导电流$J=\sigma E$
 
-\textbf{复介电常数理论}
+\textbf{复介电常数方法}
 
 定义一个复介电常数
 \begin{align}
@@ -771,6 +796,20 @@ Note：衰减的透射波会引发Goos-Hänchen位移现象。
 
 
 \section{波导基本理论}
+
+\subsection{纵向均匀系统求解思路}
+\begin{itemize}
+    \item 第一步：求$E_z(x,y)$和$B_z(x,y)$的分布，满足横向Laplace方程或Helmholtz方程及边界条件
+    \begin{align}
+        (\nabla_t^2+\omega^2\mu\varepsilon-k_z^2)E_z=0\\
+        (\nabla_t^2+\omega^2\mu\varepsilon-k_z^2)B_z=0\\
+        k_z^2=\omega^2\mu\varepsilon - k_c^2=k_0^2-k_c^2\\
+    \end{align}
+    \item 代入波导壁的边界条件，求解纵向场
+    \item 代入纵横关系得到所有的场分量
+\end{itemize}
+
+
 \subsection{从麦克斯韦方程组导出的波动方程}
 Helmholtz方程：
 \begin{align}
@@ -795,14 +834,20 @@ Helmholtz方程：
 \end{align}
 从Helmholtz方程出发，得到横向场与纵向场的关系：
 \begin{align}
-    \mathbf{E}_t=&\frac{i}{\mu\varepsilon\omega^2-k_z^2}\left( k_z \nabla_t E_z + \omega \mu \hat{\mathbf{z}} \times \nabla_t H_z \right)\\
-    \mathbf{H}_t=&\frac{i}{\mu\varepsilon\omega^2-k_z^2}\left( k_z \nabla_t H_z - \omega \varepsilon \hat{\mathbf{z}} \times \nabla_t E_z \right)
+    \mathbf{E}_t=&\frac{i}{\mu\varepsilon\omega^2-k_z^2}\left( k_z \nabla_t E_z - \omega \mu \hat{\mathbf{z}} \times \nabla_t H_z \right)\\
+    \mathbf{H}_t=&\frac{i}{\mu\varepsilon\omega^2-k_z^2}\left( k_z \nabla_t H_z  + \omega \varepsilon \hat{\mathbf{z}} \times \nabla_t E_z \right)
 \end{align}
 
 或者磁场用B表示：
 \begin{align}
-    \mathbf{E}_t=&\frac{i}{\mu\varepsilon\omega^2-k_z^2}\left( k_z \nabla_t E_z + \omega \hat{\mathbf{z}} \times \nabla_t B_z \right)\\
-    \mathbf{B}_t=&\frac{i}{\mu\varepsilon\omega^2-k_z^2}\left( k_z \nabla_t B_z - \omega \mu \varepsilon \hat{\mathbf{z}} \times \nabla_t E_z \right)
+    \mathbf{E}_t=&\frac{i}{\mu\varepsilon\omega^2-k_z^2}\left( k_z \nabla_t E_z - \omega \hat{\mathbf{z}} \times \nabla_t B_z \right)\\
+    \mathbf{B}_t=&\frac{i}{\mu\varepsilon\omega^2-k_z^2}\left( k_z \nabla_t B_z  + \omega \mu \varepsilon \hat{\mathbf{z}} \times \nabla_t E_z \right)
+\end{align}
+
+反之，有
+\begin{align}
+    \nabla_t \mathbf{E}_t=-ik_z E_z\\
+    \nabla_t \mathbf{H}_t=-ik_z H_z
 \end{align}
 
 \subsection{纵向均匀系统的模式}
@@ -812,6 +857,60 @@ Helmholtz方程：
     \item TM模：$H_z=0,E_z\neq0$，横磁波
 \end{itemize}
 
+\subsection{模式的传输特性}
+\textbf{1、传输条件}：对于一个给定的几何结构，该结构会决定一组截止参数，$f_c,\,\lambda_c,\,k_c$，只有当工作频率$f>f_c$时，该模式才能传输。
+
+即：
+\begin{align}
+    \lambda<\lambda_c,\,f>f_c,\Rightarrow \beta^2=k^2-k_c^2>0
+\end{align}
+
+\textbf{2、随激励频率变化的图像}：
+
+（1）当激励频率刚刚超过截止频率时，在波导中激励起基模的波；
+
+（2）随着激励频率增加，横向波数不变，纵向波数增大，导波波长减小，相速度减小。即，一个
+“方块”横向不变，纵向长度减小。
+
+（3）激励频率大于某个高阶模式的截止频率时，该高阶模式也会被激励起来，但低阶模式依旧存在。
+
+\textbf{3、传输条件相关的物理参量}：
+\begin{itemize}
+    \item 相移常数/纵向波数$k_z$或$\beta$：
+    \begin{align}
+        \beta=\sqrt{k^2-k_c^2}=k\sqrt{1-\left(\frac{k_c}{k}\right)^2}=k\sqrt{1-\left(\frac{\lambda}{\lambda_c}\right)^2}
+    \end{align}
+    \item 相速度$v_p$
+    \begin{align}
+        v_p=\frac{\omega}{\beta}=\frac{c}{\sqrt{1-\left(\dfrac{\lambda}{\lambda_c}\right)^2}}
+    \end{align}
+    \item 导波波长$\lambda_g$
+    \begin{align}
+        \lambda_g=\frac{2\pi}{\beta}=\frac{\lambda}{\sqrt{1-\left(\dfrac{\lambda}{\lambda_c}\right)^2}}
+    \end{align}
+    \item 群速度$v_g$
+    \begin{align}
+        v_g=\frac{\mathrm{d}\omega}{\mathrm{d}\beta}=c\sqrt{1-\left(\dfrac{\lambda}{\lambda_c}\right)^2}
+    \end{align}
+    \item 色散关系：双曲线，渐近线为$v=\pm c$
+    \item 波阻抗：相互垂直的横向电场与横向磁场之比
+    \begin{align}
+        \eta=\frac{(\hat{\mathbf{z}}\times \mathbf{E}_t)_i}{(\mathbf{H}_t)_i},\quad i=x,y
+    \end{align}
+\end{itemize}
+
+\textbf{4、截止状态下的衰减}
+
+当$k<k_c$时，纵向波数$k_z$为虚数，记为$ik_z=\alpha$，则波在z方向上呈指数衰减：
+\begin{align}
+    &\alpha=\sqrt{k_c^2-k^2}=k\sqrt{\left(\frac{k_c}{k}\right)^2-1}=k\sqrt{\left(\frac{\lambda}{\lambda_c}\right)^2-1}\\
+    &E(z),\,H(z)\propto e^{-\alpha z}\\
+    &P(z)\propto e^{-2\alpha z}
+\end{align}
+
+截止状态与衰减行波的区别：截止状态是无相位变化的原地衰减，而衰减行波是有相位变化的传播衰减。
+
+传播参数变化：$\lambda\rightarrow \lambda_c,\,v_p\rightarrow \infty,\,\lambda_g\rightarrow \infty,\,v_g\rightarrow 0$
 
 \subsection{波导的阻抗与功率传输}
 传输功率
@@ -839,49 +938,412 @@ Note: $R_s=1/\sigma\delta$为表面电阻，$\delta=\sqrt{2/\omega \mu \sigma}$�
 
 \subsection{矩形波导}
 
+结构：长边a，短边b的矩形波导。
 
-\subsubsection{矩形波导的模式}
-\subsubsection{截止频率和传播特性}
-\subsubsection{TE模式场分布}
-\subsubsection{TM模式场分布}
+传播参数：
+\begin{itemize}
+    \item 纵向波数：$k_z$或$\beta$，$\beta$又称为相移常数。
+    \item 截止波数：$k_c=\sqrt{\left(\dfrac{m\pi}{a}\right)^2+\left(\dfrac{n\pi}{b}\right)^2}$
+    \item 横向波数：$k_x =\dfrac{m\pi}{a},k_y=\dfrac{n\pi}{b}$
+    \item 关系：$k_x^2+k_y^2+k_z^2=k^2=\omega^2\mu\varepsilon$
+\end{itemize}
+
+边界条件：
+\begin{align}
+    \text{（常用）壁上电场切向分量为0：}\hat{\mathbf{n}}\times \mathbf{E}|_s=0\\
+    \text{磁场法向分量为0：}\hat{\mathbf{n}}\cdot \mathbf{B}|_s=0
+\end{align}
+
+具体的纵向场边界条件：
+\begin{align}
+    \text{TE模：}&\frac{\partial H_z}{\partial n}\bigg|_s=0\\
+    \text{TM模：}&E_z\big|_s=0
+\end{align}
+
+\subsubsection{基础性质}
+\begin{itemize}
+    \item 截止频率$f_c=\dfrac{c}{2}\sqrt{\left(\dfrac{m}{a}\right)^2+\left(\dfrac{n}{b}\right)^2}$
+    \item 导波波长$\lambda=\dfrac{\lambda_0}{\sqrt{1-\left(\dfrac{\lambda_0}{\lambda_c}\right)^2}}$
+    \item 相速度$v_p=\dfrac{c}{\sqrt{1-\left(\dfrac{f_c}{f}\right)^2}}$
+    \item 群速度$v_g=c\sqrt{1-\left(\dfrac{f_c}{f}\right)^2}$
+    \item 波阻抗
+    \begin{align}
+        \eta_{TE}=&\frac{\eta_0}{\sqrt{1-\left(\dfrac{f_c}{f}\right)^2}}\\
+        \eta_{TM}=&\eta_0\sqrt{1-\left(\dfrac{f_c}{f}\right)^2}
+    \end{align}
+    \item 传输功率
+    \begin{align}
+        P_{TE}=&\frac{\omega\mu k_z ab}{4\epsilon_{mn}k_c^2}|H_{mn}|^2\\
+        P_{TM}=&\frac{\omega\varepsilon k_z ab}{8k_c^2}|E_{mn}|^2
+    \end{align}
+    式中，$\epsilon_{mn}=\begin{cases}
+        1,&mn=0\\
+        2,&mn\neq 0
+    \end{cases}$
+    \item 损耗常数
+    \begin{align}
+        \text{常用：}\alpha_{TE10}=&\frac{2R_s}{b\eta\sqrt{1-(f_c/f)^2}}\left[ 1+\frac{2b}{a}\left(\frac{f_c}{f}\right)^2  \right]\\
+        \text{任意mn模式：}\alpha_{TE/Mmn}=&\frac{2R_s}{b\eta\sqrt{1-(f_c/f)^2}}\frac{m^2b^3+n^2a^3}{m^2ab^2+n^2a^3}
+    \end{align}
+\end{itemize}
+
+%\newpage
+\subsubsection{场分布表达式：}
+\textbf{TE模：最低模式TE10}
+\begin{align}
+    E_z=&0\\
+    H_z=&H_0 \cos\left(\frac{m\pi x}{a}\right)\cos\left(\frac{n\pi y}{b}\right)e^{ik_z z}\\
+    E_x=&-\frac{i\omega \mu}{k_c^2}\frac{n\pi}{b}H_0 \cos\left(\frac{m\pi x}{a}\right)\sin\left(\frac{n\pi y}{b}\right)e^{ik_z z}\\
+    E_y=&\frac{i\omega \mu}{k_c^2}\frac{m\pi}{a}H_0 \sin\left(\frac{m\pi x}{a}\right)\cos\left(\frac{n\pi y}{b}\right)e^{ik_z z}\\
+    H_x=&-\frac{ik_z}{k_c^2}\frac{m\pi}{a }H_0 \sin\left(\frac{m\pi x}{a}\right)\cos\left(\frac{n\pi y}{b}\right)e^{ik_z z}\\
+    H_y=&-\frac{ik_z}{k_c^2}\frac{n\pi}{b}H_0 \cos\left(\frac{m\pi x}{a}\right)\sin\left(\frac{n\pi y}{b}\right)e^{ik_z z}
+\end{align}
+
+\textbf{TM模：最低模式TM11}
+\begin{align}
+    H_z=&0\\
+    E_z=&E_0 \sin\left(\frac{m\pi x}{a}\right)\sin\left(\frac{n\pi y}{b}\right)e^{ik_z z}\\
+    E_x=&\frac{ik_z}{k_c^2}\frac{m\pi}{a}E_0 \cos\left(\frac{m\pi x}{a}\right)\sin\left(\frac{n\pi y}{b}\right)e^{ik_z z}\\
+    E_y=&\frac{ik_z}{k_c^2}\frac{n\pi}{b}E_0 \sin\left(\frac{m\pi x}{a}\right)\cos\left(\frac{n\pi y}{b}\right)e^{ik_z z}\\
+    H_x=&-\frac{i\omega\varepsilon}{k_c^2}\frac{n\pi}{b}E_0 \sin\left(\frac{m\pi x}{a}\right)\cos\left(\frac{n\pi y}{b}\right)e^{ik_z z}\\
+    H_y=&\frac{i\omega\varepsilon}{k_c^2}\frac{m\pi}{a}E_0 \cos\left(\frac{m\pi x}{a}\right)\sin\left(\frac{n\pi y}{b}\right)e^{ik_z z}
+\end{align}  
+
+
+\newpage
+\subsubsection{场分布图}
+
+\textbf{TM11}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.6\textwidth]{./Figures/Field_TM11.png}
+    %\caption{矩形波导TM11模式场分布图}
+\end{figure}
+
+\textbf{TM32}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.6\textwidth]{./Figures/Field_TM32.png}
+    %\caption{矩形波导TM32模式场分布图}
+\end{figure}
+
+\textbf{TE01}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.6\textwidth]{./Figures/Field_TE01.png}
+    %\caption{矩形波导TE01模式场分布图}
+\end{figure}
+
+
+\newpage
+\textbf{TE10}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.6\textwidth]{./Figures/Field_TE10.png}
+    %\caption{矩形波导TE10模式场分布图}
+\end{figure}
+
+\textbf{TE30}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.6\textwidth]{./Figures/Field_TE30.png}
+    %\caption{矩形波导TE30模式场分布图}
+\end{figure}
+
+
+\textbf{TE11}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.6\textwidth]{./Figures/Field_TE11.png}
+    %\caption{矩形波导TE11模式场分布图}
+\end{figure}
+
+
+\newpage
+\textbf{TE32}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.6\textwidth]{./Figures/Field_TE32.png}
+    %\caption{矩形波导TE32模式场分布图}
+\end{figure}
+
+
+
+% \subsubsection{矩形波导的模式}
+
+% \subsubsection{截止频率和传播特性}
+% \subsubsection{TE模式场分布}
+% \subsubsection{TM模式场分布}
 
 
 
 
-\subsubsection{波导的阻抗和功率传输}
+% \subsubsection{波导的阻抗和功率传输}
 
 \subsection{圆波导}
 
+结构：半径为$a$的金属圆柱波导，采用圆柱坐标$(r,\phi,z)$描述场分布。
 
-\subsubsection{圆波导的模式}
-\subsubsection{截止频率和传播特性}
-\subsubsection{TE模式场分布}
-\subsubsection{TM模式场分布}
+传播参数：
+\begin{itemize}
+    \item 纵向波数：$k_z=\beta=\sqrt{k^2-k_c^2}$，其中$k=\omega\sqrt{\mu\varepsilon}$。
+    \item 截止波数：$k_{c,\mathrm{TE}_{mn}}=\dfrac{\chi'_{mn}}{a}$，$k_{c,\mathrm{TM}_{mn}}=\dfrac{\chi_{mn}}{a}$，$\chi'_{mn}$为$J_m'(x)$的第$n$个零点，$\chi_{mn}$为$J_m(x)$的第$n$个零点。
+    \item 横向波数：$k_r=k_c$，径向分布满足Bessel方程，角向分布为$\cos(m\phi)$或$\sin(m\phi)$形式。
+    \item 关系：$k_r^2+k_z^2=k^2$，且$k_c^2=k_r^2=\left(\dfrac{\chi}{a}\right)^2$。
+\end{itemize}
+
+边界条件：
+\begin{align}
+    	\text{壁上电场切向分量为0：}&\hat{\mathbf{n}}\times \mathbf{E}|_{r=a}=0\\
+    	\text{壁上磁场法向分量为0：}&\hat{\mathbf{n}}\cdot \mathbf{B}|_{r=a}=0
+\end{align}
+
+具体的纵向场边界条件：
+\begin{align}
+    	\text{TE模：}&\left.\frac{\partial H_z}{\partial r}\right|_{r=a}=0\Rightarrow J_m'(\chi'_{mn})=0\\
+    	\text{TM模：}&E_z\big|_{r=a}=0\Rightarrow J_m(\chi_{mn})=0
+\end{align}
+
+\subsubsection{基础性质}
+\begin{itemize}
+    \item 截止频率：$f_{c,\mathrm{TE}_{mn}}=\dfrac{c}{2\pi} \dfrac{\chi'_{mn}}{a}$，$f_{c,\mathrm{TM}_{mn}}=\dfrac{c}{2\pi} \dfrac{\chi_{mn}}{a}$。
+    \item 导波波长：$\lambda_g=\dfrac{\lambda_0}{\sqrt{1-\left(\dfrac{f_c}{f}\right)^2}}$，$\lambda_0=\dfrac{2\pi}{k}$。
+    \item 相速度：$v_p=\dfrac{c}{\sqrt{1-\left(\dfrac{f_c}{f}\right)^2}}$。
+    \item 群速度：$v_g=c\sqrt{1-\left(\dfrac{f_c}{f}\right)^2}$。
+    \item 波阻抗：
+    \begin{align}
+        \eta_{TE}=&\frac{\eta_0}{\sqrt{1-\left(\dfrac{f_c}{f}\right)^2}}\\
+        \eta_{TM}=&\eta_0\sqrt{1-\left(\dfrac{f_c}{f}\right)^2}
+    \end{align}
+    \item 传输功率（以$H_z=H_0J_m\left(\dfrac{\chi'_{mn} r}{a}\right)\cos m\phi\,e^{ik_z z}$、$E_z=E_0J_m\left(\dfrac{\chi_{mn} r}{a}\right)\cos m\phi\,e^{ik_z z}$为例）：
+    \begin{align}
+        P_{TE}=&\frac{\omega\mu\beta}{2k_c^2}|H_0|^2\int_0^{2\pi}\int_0^{a}\Big|J_m\Big(\frac{\chi'_{mn} r}{a}\Big)\cos m\phi\Big|^2 r\,\mathrm{d}r\mathrm{d}\phi\\
+        P_{TM}=&\frac{\omega\varepsilon\beta}{2k_c^2}|E_0|^2\int_0^{2\pi}\int_0^{a}\Big|J_m\Big(\frac{\chi_{mn} r}{a}\Big)\cos m\phi\Big|^2 r\,\mathrm{d}r\mathrm{d}\phi
+    \end{align}
+    其中积分可借助$\int_0^1 J_m^2(\alpha x) x\,\mathrm{d}x$的标准结果化为闭式表达。
+    \item 损耗常数（金属壁面电导率$\sigma$）：
+    \begin{align}
+        \alpha_{TE}=&\frac{R_s}{2P_{TE}}\int_0^{2\pi}\left(\big|H_\phi(r=a,\phi)\big|^2+\big|H_\phi(r=a,\phi)\big|^2\right) a\,\mathrm{d}\phi\\
+        \alpha_{TM}=&\frac{R_s}{2P_{TM}}\int_0^{2\pi}\big|H_\phi(r=a,\phi)\big|^2 a\,\mathrm{d}\phi,
+    \end{align}
+    $R_s=\sqrt{\dfrac{\omega\mu}{2\sigma}}$为表面电阻。
+\end{itemize}
+
+传输功率和损耗常数的具体表达式：
+\begin{align}
+    % TM 模式传输功率
+&P_{\mathrm{TM}} = \frac{\pi a^2 \omega \varepsilon \beta}{2 \epsilon_n k_c^2} |E_0|^2 J_{n+1}^2(\chi_{ni})\\
+% TM 模式损耗常数
+&\alpha_{\mathrm{TM}} = \frac{R_s}{a \eta \sqrt{1 - (f_c/f)^2}}\\
+% TE 模式传输功率
+&P_{\mathrm{TE}} = \frac{\pi a^2 \omega \mu \beta}{2 \epsilon_n k_c^2} |H_0|^2 \left( 1 - \frac{n^2}{\chi_{ni}'^2} \right) J_n^2(\chi'_{ni})\\
+% TE 模式损耗常数
+&\alpha_{\mathrm{TE}} = \frac{R_s}{a \eta \sqrt{1 - (f_c/f)^2}} \left[ \left( \frac{f_c}{f} \right)^2 + \frac{n^2}{\chi_{ni}'^2 - n^2} \right]
+\end{align}
+式中，
+\begin{align}
+    \epsilon_n=\begin{cases}
+        2 & n=0 \\
+        1 & n\neq 0
+    \end{cases}
+\end{align}
+
+%\newpage
+\subsubsection{场分布表达式：}
+	\textbf{TE模：最低模式$\mathrm{TE}_{11}$，$k_c=\chi'_{ni}/a$}
+
+    偶模式：
+
+\begin{align}
+    H_z    &= H_0 J_n(k_c r) \cos(n\phi) e^{jk_z z} \\
+    H_r    &= \frac{ik_z}{k_c} H_0 J_n'(k_c r) \cos(n\phi) e^{jk_z z} \\
+    H_\phi &= -\frac{ik_z n}{k_c^2 r} H_0 J_n(k_c r) \sin(n\phi) e^{jk_z z} \\
+    E_r    &= -\frac{i\omega\mu n}{k_c^2 r} H_0 J_n(k_c r) \sin(n\phi) e^{jk_z z} \\
+    E_\phi &= -\frac{i\omega\mu}{k_c} H_0 J_n'(k_c r) \cos(n\phi) e^{jk_z z}
+\end{align}
+
+奇模式：
+
+\begin{align}
+    H_z    &= H_0 J_n(k_c r) \sin(n\phi) e^{jk_z z} \\
+    H_r    &= \frac{ik_z}{k_c} H_0 J_n'(k_c r) \sin(n\phi) e^{jk_z z} \\
+    H_\phi &= \frac{ik_z n}{k_c^2 r} H_0 J_n(k_c r) \cos(n\phi) e^{jk_z z} \\
+    E_r    &= \frac{i\omega\mu n}{k_c^2 r} H_0 J_n(k_c r) \cos(n\phi) e^{jk_z z} \\
+    E_\phi &= -\frac{i\omega\mu}{k_c} H_0 J_n'(k_c r) \sin(n\phi) e^{jk_z z}
+\end{align}
+
+
+	\textbf{TM模：最低模式$\mathrm{TM}_{01}$，$k_c=\chi_{ni}/a$}
+
+    偶模式：
+\begin{align}
+    H_z   &= 0 \\
+    E_z    &= E_0 J_n(k_c r) \cos(n\phi) e^{jk_z z} \\
+    E_r    &= \frac{ik_z}{k_c} E_0 J_n'(k_c r) \cos(n\phi) e^{jk_z z} \\
+    E_\phi &= -\frac{ik_z n}{k_c^2 r} E_0 J_n(k_c r) \sin(n\phi) e^{jk_z z} \\
+    H_r    &= \frac{i\omega\varepsilon n}{k_c^2 r} E_0 J_n(k_c r) \sin(n\phi) e^{jk_z z} \\
+    H_\phi &= \frac{i\omega\varepsilon}{k_c} E_0 J_n'(k_c r) \cos(n\phi) e^{jk_z z}
+\end{align}
+
+奇模式：
+\begin{align}
+    H_z   &= 0 \\
+    E_z    &= E_0 J_n(k_c r) \sin(n\phi) e^{ik_z z} \\
+    E_r    &= \frac{ik_z}{k_c} E_0 J_n'(k_c r) \sin(n\phi) e^{ik_z z} \\
+    E_\phi &= \frac{ik_z n}{k_c^2 r} E_0 J_n(k_c r) \cos(n\phi) e^{ik_z z} \\
+    H_r    &= -\frac{i\omega\varepsilon n}{k_c^2 r} E_0 J_n(k_c r) \cos(n\phi) e^{ik_z z} \\
+    H_\phi &= \frac{i\omega\varepsilon}{k_c} E_0 J_n'(k_c r) \sin(n\phi) e^{ik_z z}
+\end{align}
+
+\subsubsection{场分布图}
+绘图规律：
+
+$TE_{ni}$模式：
+\begin{itemize}
+    \item 若n为0，则电场线为同心圆，磁场线为径向线。沿径向，电场线的方向变化i-1次。
+    \item 若n不为0，整个圆周分为2n个扇区；
+    \item 每个扇区中，电场线绕成i-1个闭合环路，在壁面上有半个环路；任意两个相邻环路的旋转方向相反（即不产生相邻但反向的电场线）
+    \item 磁场线连接各相邻电场线环路的中心，但不会跨过扇区分界线。
+\end{itemize}
+
+$TM_{ni}$模式：
+\begin{itemize}
+    \item 若n为0，则磁场线为同心圆，电场线为径向线。沿径向，磁场线的方向变换i-1次。
+    \item 若n不为0，整个圆周分为2n个扇区；
+    \item 每个扇区中，磁场线绕成i个闭合环路，任意两个相邻环路的旋转方向相反，即不产生相邻但反向的磁场线。
+    \item 电场线连接各相邻磁场线环路的中心，但不会跨过扇区分界线。
+\end{itemize}
 
 
 
 
-\subsubsection{波导的阻抗和功率传输}
-\subsubsection{高阶模式的特性}
+
+
+\subsection{同轴线}
+同轴线中多为TEM模式
+\begin{itemize}
+    \item 截止频率 $f_c=0$
+    \item 波速 $v_p=v_g=c$
+    \item 波阻抗 $\eta=\dfrac{\eta_0}{2\pi}\ln\dfrac{b}{a}$
+    \item 传输功率 $P=\dfrac{E_m^2}{2\eta}\cdot 2\pi \left( b - a \right)$
+    \item 损耗常数 $\alpha=\dfrac{R_s}{2\pi \eta} \left( \dfrac{1}{a} + \dfrac{1}{b} \right)$  
+\end{itemize}
 
 \subsection{介质加载波导}
 
-\subsubsection{部分填充介质的波导}
-介质对传播常数的影响。
+\subsubsection{窄边单侧填充方波导}
+结构：长$x=0\sim a$，宽$y=0\sim b$的矩形波导，其中长边$x=0\sim h$区域填充介质，$h<a$。
 
-\subsubsection{特征方程的求解}
-不同边界条件下的特征方程。
-
-\subsection{介质加载圆波导和介质波导}
-
-\subsubsection{介质圆波导}
+传播参数：
 \begin{itemize}
-    \item 介质波导的导模条件
-    \item 泄漏模和辐射模
+    \item 两个区域各自有一个横向波数，但纵向波数相同。即有条件
+    \begin{align}
+        k_{x1}^2+k_y^2+k_z^2=k_1^2+k_z^2=k^2=\omega^2\mu_1\varepsilon_1\\
+        k_{x2}^2+k_y^2+k_z^2=k_2^2+k_z^2=k^2=\omega^2\mu_2\varepsilon_2
+    \end{align}
+    \item y方向边界条件决定：$k_y=\dfrac{n\pi}{b}$，$n=0,1,2,\ldots$
+    \item 在$k_y\neq 0$时的横向波数表示为：
+    \begin{align}
+        k_{xi}=\sqrt{\omega_c^2\varepsilon_i\mu_i-\left(\frac{n\pi}{b}\right)^2},\quad i=1,2
+    \end{align}
+    式中，$\omega_c$为截止角频率。
 \end{itemize}
 
-\subsection{光纤原理}
-光在光纤中的传播机制。
+模式分析：
+
+（1）$TE$模式：$E_x=0$，即$k_y=0$，仅允许$TE_{m0}$模式存在。
+
+TE模式截止波数：需要求解以下方程决定：
+    \begin{align}
+        \text{电场交界面：}&\frac{\mu_1k_{x1}A}{k_1^2-k_z^2}\sin (k_{x1}h)=\frac{\mu_2k_{x2}B}{k_2^2-k_z^2}\sin[k_{x2}(h-a)]\\
+        \text{磁场交界面：}&\frac{A}{k_1^2-k_z^2}\cos(k_{x1}h)=\frac{B}{k_2^2-k_z^2}\cos[k_{x2}(h-a)]\\
+                          &A\cos(k_{x1}h)=B\cos[k_{x2}(h-a)]\\
+        &k_{x1}^2-k_{x2}^2=\omega^2\mu_1\varepsilon_1-\omega^2\mu_2\varepsilon_2
+    \end{align}
+    仅允许$TE_{m0}$模式存在。
+
+（2）$TM$模式：$H_x=0$，即$k_y=0$，由于$TM_{mn}$模式的n不能为0，介质加载矩形波导中不存在TM模式。
+
+TM模式截止波数：需要求解以下方程决定：
+
+原因：
+    TM模式截止波数：需要求解以下方程决定：
+    \begin{align}
+        \text{磁场交界面：}&\frac{\varepsilon_1k_{x1}A}{k_1^2-k_z^2}\cos (k_{x1}h)=\frac{\varepsilon_2k_{x2}B}{k_2^2-k_z^2}\cos[k_{x2}(h-a)]\\
+        \text{电场交界面：}&\frac{A}{k_1^2-k_z^2}\sin(k_{x1}h)=\frac{B}{k_2^2-k_z^2}\sin[k_{x2}(h-a)]\\
+                          &A\sin(k_{x1}h)=B\sin[k_{x2}(h-a)]\\
+        &k_{x1}^2-k_{x2}^2=\omega^2\mu_1\varepsilon_1-\omega^2\mu_2\varepsilon_2
+    \end{align}
+    由于$TM_{mn}$模式的n不能为0，介质加载矩形波导中不存在TM模式。
+
+（3）x纵向模式：分为$E_y=0$的$TE^{(x)}$模式和$H_y=0$的$TM^{(x)}$模式。
+
+计算要点：
+\begin{itemize}
+    \item x纵向的纵横关系：
+    \begin{align}
+        \mathbf{E}_{y,z}=\frac{1}{k^2-k_x^2}\left[  \frac{\partial }{\partial x}\nabla_{y,z}E_x -i\mu\omega \hat{\mathbf{x}}\times \nabla_{y,z}H_x \right]
+        \mathbf{H}_{y,z}=\frac{1}{k^2-k_x^2}\left[  \frac{\partial }{\partial x}\nabla_{y,z}H_x +i\varepsilon\omega \hat{\mathbf{x}}\times \nabla_{y,z}E_x \right]
+    \end{align}
+    \item $TE^{(x)}$模式，交界面给出的截止条件：
+    \begin{align}
+        \frac{\mu_1A}{k_1^2-k_{x1}^2}\sin(k_{x1}h)=\frac{\mu_2B}{k_2^2-k_{x2}^2}\sin[k_{x2}(h-a)]\\
+        \frac{k_{x1}A}{k_1^2-k_{x1}^2}\cos(k_{x1}h)=\frac{k_{x2}B}{k_2^2-k_{x2}^2}\cos[k_{x2}(h-a)]\\
+        \frac{k_{x1}}{\mu_1}\cot(k_{x1}h)=\frac{k_{x2}}{\mu_2}\cot[k_{x2}(h-a)]\\
+        \k_{x1}^2-k_{x2}^2=\omega^2\mu_1\varepsilon_1-\omega^2\mu_2\varepsilon_2
+    \end{align}
+    \item $TM^{(x)}$模式，交界面给出的截止条件：
+    \begin{align}
+        \frac{k_{x1}}{\varepsilon_1}\tan(k_{x1}h)=\frac{k_{x2}}{\varepsilon_2}\tan[k_{x2}(h-a)]\\
+        k_{x1}^2-k_{x2}^2=\omega^2\mu_1\varepsilon_1-\omega^2\mu_2\varepsilon_2
+    \end{align}
+\end{itemize}
+
+性质：
+\begin{itemize}
+    \item 对每个n，都有无穷多解，从小到大排序，序数即为m；
+    \item 当$n=0$时，$TE_{m0}^{(x)}$ 和 $TE_{m0}^{(z)}$模式的截止频率相同；
+    \item 对$TM^(x)$模式，仍然有$n\neq 0$.
+\end{itemize}
+
+（4）y纵向模式：分为$E_y=0$的$TE^{(y)}$模式和$H_y=0$的$TM^{(y)}$模式。
+
+计算要点：
+\begin{itemize}
+    \item y纵向的纵横关系：
+    \begin{align}
+        \mathbf{E}_{z,x}=\frac{1}{k^2-k_y^2}\left[\frac{\partial}{\partial y}\nabla_{z,x}E_y -i\mu\omega \hat{\mathbf{y}}\times \nabla_{z,x}H_y \right]\\
+        \mathbf{H}_{z,x}=\frac{1}{k^2-k_y^2}\left[\frac{\partial}{\partial y}\nabla_{z,x}H_y +i\varepsilon\omega \hat{\mathbf{y}}\times \nabla_{z,x}E_y \right]
+    \end{align}
+    \item $TE^{(y)}$模式，交界面给出的截止条件：\textcolor{red}{待补充}
+    \item $TM^{(y)}$模式，交界面给出的截止条件：\textcolor{red}{待补充}
+\end{itemize}
+
+
+
+\subsubsection{双侧对称填充方波导}
+不整理了，考出来就死给他看
+
+\subsubsection{角向均匀填充圆波导}
+
+\subsubsection{对称平板介质波导}
+
+% \subsubsection{圆截面介质波导}
+
+% \subsubsection{特征方程的求解}
+% 不同边界条件下的特征方程。
+
+% \subsection{介质加载圆波导和介质波导}
+
+% \subsubsection{介质圆波导}
+% \begin{itemize}
+%     \item 介质波导的导模条件
+%     \item 泄漏模和辐射模
+% \end{itemize}
+
+% \subsection{光纤原理}
+% 光在光纤中的传播机制。
 
 \section{谐振腔基础理论}
 
