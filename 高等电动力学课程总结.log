@@ -1,4 +1,4 @@
-This is XeTeX, Version 3.141592653-2.6-0.999996 (TeX Live 2024) (preloaded format=xelatex 2024.3.18)  6 JAN 2026 02:12
+This is XeTeX, Version 3.141592653-2.6-0.999996 (TeX Live 2024) (preloaded format=xelatex 2024.3.18)  6 JAN 2026 02:18
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -961,21 +961,14 @@ enddocument/afterlastpage: lastpage setting LastPage.
 LaTeX2e <2023-11-01> patch level 1
 L3 programming layer <2022/08/05>
  ***********
-
-
-Package rerunfilecheck Warning: File `高等电动力学课程总结.out' has changed.
-(rerunfilecheck)                Rerun to get outlines right
-(rerunfilecheck)                or use package `bookmark'.
-
-Package rerunfilecheck Info: Checksums for `高等电动力学课程总结.out':
-(rerunfilecheck)             Before: 56CB5D915F4A1ABA6E69C479EA2A7E35;13856
-(rerunfilecheck)             After:  CD5BB6B2C5D51FF513FB52ED0F920F6E;13251.
+Package rerunfilecheck Info: File `高等电动力学课程总结.out' has not changed.
+(rerunfilecheck)             Checksum: CD5BB6B2C5D51FF513FB52ED0F920F6E;13251.
  ) 
 Here is how much of TeX's memory you used:
- 38962 strings out of 474761
- 958146 string characters out of 5761074
+ 38961 strings out of 474761
+ 958130 string characters out of 5761074
  1945148 words of memory out of 5000000
- 60457 multiletter control sequences out of 15000+600000
+ 60456 multiletter control sequences out of 15000+600000
  573372 words of font info for 124 fonts, out of 8000000 for 9000
  1348 hyphenation exceptions out of 8191
  93i,16n,97p,727b,505s stack positions out of 10000i,1000n,20000p,200000b,200000s
