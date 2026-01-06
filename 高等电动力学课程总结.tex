@@ -174,7 +174,7 @@
     \end{align}
     \item 表面电阻
     \begin{align}
-        R_s=\frac{1}{\sigma \delta}=\sqrt{\frac{\omega \mu}{2 \sigma}}
+        R_s=\frac{1}{\sigma \delta}=\sqrt{\frac{\omega \mu}{2 \sigma}}=\frac{\delta\omega\mu}{2}
     \end{align}
 \end{itemize}
 
@@ -829,8 +829,8 @@ Helmholtz方程：
 
 考虑沿z方向均匀的波导，电磁场可表示为：
 \begin{align}
-    \mathbf{E}(x,y,z)=\mathbf{E}_t(x,y)e^{-ik_z z}+ \hat{\mathbf{z}} E_z(x,y)e^{-ik_z z}\\
-    \mathbf{H}(x,y,z)=\mathbf{H}_t(x,y)e^{-ik_z z}+ \hat{\mathbf{z}} H_z(x,y)e^{-ik_z z}
+    \mathbf{E}(x,y,z)=\mathbf{E}_t(x,y)e^{jk_z z}+ \hat{\mathbf{z}} E_z(x,y)e^{jk_z z}\\
+    \mathbf{H}(x,y,z)=\mathbf{H}_t(x,y)e^{jk_z z}+ \hat{\mathbf{z}} H_z(x,y)e^{jk_z z}
 \end{align}
 从Helmholtz方程出发，得到横向场与纵向场的关系：
 \begin{align}
@@ -1327,6 +1327,47 @@ TM模式截止波数：需要求解以下方程决定：
 
 \subsubsection{角向均匀填充圆波导}
 
+结构：半径为$b$的圆波导，在$0<r<a$的区域填充介质1，在$a<r<b$的区域填充介质2
+
+最简单模式：$TM_{0i}$，
+场表达式：
+\begin{align}
+    \mathbf{r\leq a:}&\\
+    &E_{z1}=AJ_0(k_1\rho)e^{ik_zz}\\
+    &E_{r1}=\frac{ik_z}{k_1^2}\frac{\partial E_{z1}}{\partial r}=\frac{ik_z}{k_1}AJ_0'(k_1\rho)e^{ik_zz}\\
+    &H_{\phi 1}=\frac{i\omega \varepsilon_1}{k_1^2}\frac{\partial E_{z1}}{\partial r}=\frac{i\omega \varepsilon_1}{k_1}AJ_0'(k_1\rho)e^{ik_zz}\\
+    \mathbf{a<r\leq b:}&\\
+    &E_{z2}=[B_1J_0(k_2r)+B_2N_0(k_2r)]e^{ik_zz}\\
+    &E_{r2}=\frac{ik_z}{k_2^2}\frac{\partial E_{z2}}{\partial r}=\frac{ik_z}{k_2}[B_1J_0'(k_2r)+B_2N_0'(k_2r)]e^{ik_zz}\\
+    &H_{\phi 2}=\frac{i\omega \varepsilon_2}{k_2^2}\frac{\partial E_{z2}}{\partial r}=\frac{i\omega \varepsilon_2}{k_2}[B_1J_0'(k_2r)+B_2N_0'(k_2r)]e^{ik_zz}
+\end{align}
+
+边界条件：
+\begin{align}
+    E_{z2}(r=b)=0 \Rightarrow B_1J_0(k_2b)+B_2N_0(k_2b)=0\\
+\end{align}
+
+交界面条件：
+\begin{align}
+    E_{z1}(r=a)=E_{z2}(r=a) \Rightarrow& AJ_0(k_1a)=B_1J_0(k_2a)+B_2N_0(k_2a)\\
+    H_{\phi 1}(r=a)=H_{\phi 2}(r=a) \Rightarrow& \frac{\varepsilon_1}{k_1} AJ_0'(k_1a)=\frac{\varepsilon_2}{k_2} [B_1J_0'(k_2a)+B_2N_0'(k_2a)]
+\end{align}
+
+代回可得方程
+\begin{align}
+    &\frac{\varepsilon_1}{k_1}\frac{J_0'(k_1a)}{J_0(k_1a)}=\frac{\varepsilon_2}{k_2}\frac{N_0(k_2b)J_0'(k_2a)-J_0(k_2b)N_0'(k_2a)}{N_0(k_2b)J_0(k_2a)-J_0(k_2b)N_0(k_2a)}\\
+    &k_2^2-k_1^2=\omega^2\mu_0(\varepsilon_2-\varepsilon_1)
+\end{align}
+
+特殊模式：$r<a$区域为真空，且相速度为真空光速，即$v_{p1}=c$，$k_z=k$，$k_1=0$，则得到真空区场表达式：
+\begin{align}
+    &E_{z1}=Ae^{ik_zz}\\
+    &E_{r1}=-\frac{ik_z}{2}Are^{ik_zz}
+\end{align}
+
+
+
+
 \subsubsection{对称平板介质波导}
 
 % \subsubsection{圆截面介质波导}
@@ -1347,64 +1388,416 @@ TM模式截止波数：需要求解以下方程决定：
 
 \section{谐振腔基础理论}
 
-\subsection{波动方程及其基本解}
+% \subsection{波动方程及其基本解}
 
 \subsection{谐振系统的纵横关系}
 
-\subsubsection{波导的储能与品质因数}
+规范：波总写成$e^{j(k_zz-\omega t)}$形式，即
+\begin{align}
+    E_z=E_z(x,y)e^{j(k_zz-\omega t)}\\
+    H_z=H_z(x,y)e^{j(k_zz-\omega t)}
+\end{align}
+
+\begin{align}
+    \mathbf{E}_t=\frac{1}{k_c^2}\left[  \nabla_t\left(\frac{\partial E_z}{\partial z}\right) - j\omega\mu(\hat{\mathbf{z}}\times\nabla_t H_z)  \right]\\
+    \mathbf{H}_t=\frac{1}{k_c^2}\left[  \nabla_t\left(  \frac{\partial H_z}{\partial z}  \right) + j\omega\varepsilon(\hat{\mathbf{z}}\times\nabla_t E_z)  \right]
+\end{align}
+
+\subsection{储能、表面损耗与品质因数}
+
+储能
+\begin{align}
+    W_0=&W_{emax}=\frac{\varepsilon}{2}\int_V \mathbf{E}\cdot\mathbf{E}^*\mathrm{d}V\\
+        =&W_{hmax}=\frac{\mu}{2}\int_V \mathbf{H}\cdot\mathbf{H}^*\mathrm{d}V
+\end{align}
+
+表面损耗
+\begin{align}
+    P_s=\frac{R_s}{2}\int_S \mathbf{H}_t\cdot\mathbf{H}_t^* \mathrm{d}S
+\end{align}
+
+品质因数：定义为$\omega U_0/P_s$，即$2\pi$倍的腔内储存的电磁场总能量与每周期损耗能量之比。
+\begin{align}
+    Q_0=\frac{2}{\delta}\frac{\int_V \mathbf{H}\cdot\mathbf{H}^* \mathrm{d}V}{\int_S \mathbf{H}_t\cdot\mathbf{H}_t^* \mathrm{d}S}
+\end{align}
+
+无外部能量补充时，谐振腔内能量随时间指数衰减：
+\begin{align}
+    W(t)=&W_0 e^{-\frac{t}{\tau}},\quad \tau=\frac{Q_0}{\omega_0}\\
+    E(t)=&E_0 e^{-\frac{t}{2\tau}}
+\end{align}
+
+\subsection{其他作为加速器谐振腔的重要参数}
+\begin{itemize}
+    \item 分流阻抗
+    \begin{align}
+        Z_s=\frac{V^2}{P}=\frac{(\int_0^L E_z\mathrm{d}z)^2}{P}
+    \end{align}
+    \item 渡越时间因子
+    \begin{align}
+        T=\frac{V_{acc}}{V}=\frac{\left|\int_0^L E_z(z)e^{-i\omega\frac{ z}{v}} \mathrm{d}z\right|}{\int_0^L |E_z(z)| \mathrm{d}z}
+    \end{align}
+    \item 有效分流阻抗
+    \begin{align}
+        Z_{s,eff}=Z_s\cdot T^2=\frac{V_{acc}^2}{P}=\frac{(|\int_0^L E_ze^{-i\omega \frac{z}{v}}\mathrm{d}z)^2}{P}
+    \end{align}
+    \item R/Q
+    \begin{align}
+        \frac{R}{Q}=\frac{V_{acc}^2}{\omega U}=\frac{(|\int_0^L E_ze^{-i\omega \frac{z}{v}}\mathrm{d}z)^2}{\omega U}
+    \end{align}
+\end{itemize}
+在行波加速结构中，通常有$v_{particle}=v_{phase}$，故$\omega/v=k$。
+
 
 \section{常见谐振腔}
 \subsection{矩形谐振腔}
+
+横截面长a宽b，纵向长L
+\subsubsection{基础性质}
 \begin{itemize}
-    \item 谐振频率的计算
-    \item 品质因数Q的定义和计算
-    \item 模式的正交性
+    \item 波数：
+    \begin{align}
+        k_x=\frac{m\pi}{a},\quad k_y=\frac{n\pi}{b},\quad k_z=\frac{p\pi}{L}
+    \end{align}
+    \item 谐振频率
+    \begin{align}
+        f=\frac{c}{2}\sqrt{\left(\frac{m}{a}\right)^2+\left(\frac{n}{b}\right)^2+\left(\frac{p}{L}\right)^2}
+    \end{align}
+    \item 谐振波长
+    \begin{align}
+        \lambda = \frac{c}{f}
+    \end{align}
+    \item 主模：$b<a\leq L$时，$\mathrm{TE}_{101}$为主模；$b>L$时，$TM_{110}$为主模。
 \end{itemize}
 
+\subsubsection{场分布表达式}
+TE模式：
+\begin{align}
+    H_z &= H_0 \cos(k_x x) \cos(k_y y) \sin(k_z z)\\
+    H_x &= \frac{k_x k_z}{k_c^2} H_0 \sin(k_x x) \cos(k_y y) \cos(k_z z) \\
+    H_y &= \frac{k_y k_z}{k_c^2} H_0 \cos(k_x x) \sin(k_y y) \cos(k_z z) \\
+    E_x &= \frac{i\omega \mu k_y}{k_c^2} H_0 \cos(k_x x) \sin(k_y y) \sin(k_z z) \\
+    E_y &= -\frac{i\omega \mu k_x}{k_c^2} H_0 \sin(k_x x) \cos(k_y y) \sin(k_z z)
+\end{align}
+
+TM模式：
+\begin{align}
+    E_z &= E_0 \sin(k_x x) \sin(k_y y) \cos(k_z z) \\
+    E_x &= -\frac{k_x k_z}{k_c^2} E_0 \cos(k_x x) \sin(k_y y) \sin(k_z z) \\
+    E_y &= -\frac{k_y k_z}{k_c^2} E_0 \sin(k_x x) \cos(k_y y) \sin(k_z z) \\
+    H_x &= \frac{i\omega \epsilon k_y}{k_c^2} E_0 \sin(k_x x) \cos(k_y y) \cos(k_z z) \\
+    H_y &= -\frac{i\omega \epsilon k_x}{k_c^2} E_0 \cos(k_x x) \sin(k_y y) \cos(k_z z)
+\end{align}
+
+\subsubsection{腔内储能}
+
+TE模式：
+\begin{itemize}
+    \item m,n,p均不为0时：
+\begin{align}
+    U=\frac{\mu V}{16}\frac{k^2}{k_c^2}|H_0|^2
+\end{align}
+    \item m或n为0时：
+    \begin{align}
+    U=\frac{\mu V}{8}\frac{k^2}{k_c^2}|H_0|^2
+    \end{align}
+\end{itemize}
+
+TM模式：
+\begin{itemize}
+    \item p不为0时：
+    \begin{align}
+        U=\frac{\varepsilon V}{16}\frac{k^2}{k_c^2}|E_0|^2
+    \end{align}
+    \item p=0时（此时还有$k=k_c$）：
+    \begin{align}
+        U=\frac{\varepsilon V}{8}|E_0|^2
+    \end{align}
+\end{itemize}
+
+\subsubsection{腔壁损耗}
+TE模式
+\begin{itemize}
+    \item 通用表达式：
+    \begin{align}
+        P_s=\frac{R_s|H_0|^2}{4}\left[ \frac{2k_z^2}{k_c^4}\left( \frac{k_x^2}{\epsilon_m}+\frac{k_y^2}{\epsilon_n} \right)ab  + \left(  \frac{2}{\epsilon_m}+\frac{k_x^2k_z^2}{k_c^4}  \right)aL  +\left(  \frac{2}{\epsilon_n}+\frac{k_y^2k_z^2}{k_c^4}  \right)bL  \right]
+    \end{align}
+    \item 诺依曼因子：
+    \begin{align}
+        \epsilon_i=\begin{cases}
+            1 & i= 0\\
+            2 & i\neq 0
+            \end{cases}
+    \end{align}
+\end{itemize}
+
+TM模式：
+
+\begin{align}
+        &P_s=\frac{R_s \omega^2\varepsilon^2|E_0|^2}{4k_c^2}\left[ ab+\frac{2}{\epsilon_p}\frac{L}{k_c^2}(bk_x^2+ak_y^2) \right]\\
+        &\epsilon_p=\begin{cases}
+            1 & p= 0\\
+            2 & p\neq0
+            \end{cases}
+    \end{align}
+
+
+\subsubsection{品质因数}
+矩形腔主模$TE_{101}$的品质因数为：
+\begin{align}
+    Q_0=\frac{abL}{\delta}\frac{a^2+L^2}{2b(a^3+L^3)+al(a^2+L^2)}
+\end{align}
+
+
+
 \subsection{圆柱谐振腔}
-圆柱形谐振腔的谐振特性。
+横截面半径a，纵向长L
+
+\subsubsection{基础性质}
+\begin{itemize}
+    \item 波数：
+    \begin{align}
+        k_{c,TE}=\frac{\chi'_{ni}}{a},\quad k_{c,TM}=\frac{\chi_{ni}}{a},\quad k_z=\frac{p\pi}{L}
+    \end{align}
+    \item 谐振频率
+    \begin{align}
+        \text{TE模：}f_{TE}=&\frac{c}{2}\sqrt{\left( \frac{\chi'_{ni}}{a\pi} \right)^2+\left( \frac{p}{L} \right)^2}\\
+        \text{TM模：}f_{TM}=&\frac{c}{2}\sqrt{\left( \frac{\chi_{ni}}{a\pi} \right)^2+\left( \frac{p}{L} \right)^2}
+    \end{align}
+    \item 谐振波长
+    \begin{align}
+        \lambda=\frac{c}{f}
+    \end{align}
+    \item 可以存在的模式：$TE_{nip}$要求$p\neq 0$；$TM_{nip}$允许$p=0$。
+    \item 主模：当$l<2.016a$时，$TM_{010}$为主模；$l>2.016a$时，$TE_{111}$为主模。
+\end{itemize}
+
+\subsubsection{场表达式}
+$TE_{nip}$模式：
+\begin{align}
+    H_z &= H_0 J_n(k_c \rho) \cos(n\phi) \sin(k_z z) \\
+    H_\rho &= \frac{k_z}{k_c} H_0 J'_n(k_c \rho) \cos(n\phi) \cos(k_z z) \\
+    H_\phi &= -\frac{nk_z}{k_c^2 \rho} H_0 J_n(k_c \rho) \sin(n\phi) \cos(k_z z) \\
+    E_\rho &= \frac{i\omega\mu n}{k_c^2 \rho} H_0 J_n(k_c \rho) \sin(n\phi) \sin(k_z z) \\
+    E_\phi &= \frac{i\omega\mu}{k_c} H_0 J'_n(k_c \rho) \cos(n\phi) \sin(k_z z)
+\end{align}
+
+$TM_{nip}$模式：
+\begin{align}
+    E_z &= E_0 J_n(k_c \rho) \cos(n\phi) \cos(k_z z) \\
+    E_\rho &= -\frac{k_z}{k_c} E_0 J'_n(k_c \rho) \cos(n\phi) \sin(k_z z) \\
+    E_\phi &= \frac{nk_z}{k_c^2 \rho} E_0 J_n(k_c \rho) \sin(n\phi) \sin(k_z z) \\
+    H_\rho &= \frac{i\omega\varepsilon n}{k_c^2 \rho} E_0 J_n(k_c \rho) \sin(n\phi) \cos(k_z z) \\
+    H_\phi &= -\frac{i\omega\varepsilon}{k_c} E_0 J'_n(k_c \rho) \cos(n\phi) \cos(k_z z)
+\end{align}
+
+\subsubsection{腔内储能}
+（公式由AI给出，未验算）
+
+重要积分公式：
+\begin{align}
+    &\int_{0}^{a} \left[ J_{n}'^{2}(k_{c}\rho) + \frac{n^{2}}{(k_{c}\rho)^{2}} J_{n}^{2}(k_{c}\rho) \right] \rho \mathrm{d}\rho = \frac{a^{2}}{2} \left[ \left( 1 - \frac{n^{2}}{(k_{c}a)^{2}} \right) J_{n}^{2}(k_{c}a) + J_{n}'^{2}(k_{c}a) \right]\\
+    &\int_{0}^{a} J_{n}^{2}(k_{c}\rho) \rho \mathrm{d}\rho = \frac{a^{2}}{2} \left[ J_{n}^{2}(k_{c}a) - J_{n-1}(k_{c}a) J_{n+1}(k_{c}a) \right]\\
+    &\int_{0}^{a} J_{n}^{2}(k_{c}\rho) \rho \mathrm{d}\rho = \frac{a^{2}}{2} \left[ J_{n}'^{2}(k_{c}a) + \left( 1 - \frac{n^{2}}{(k_{c}a)^{2}} \right) J_{n}^{2}(k_{c}a) \right]
+\end{align}
+
+
+\begin{align}
+    &W_{0,TE}=\frac{\mu V |H_0|^2}{4\epsilon_n}\frac{k^2}{k_c^2}\left(  1-\frac{n^2}{\chi'^2_{ni}}  \right)J_n^2(\chi'_{ni})\\
+    &W_{0,TM}=\frac{\varepsilon V |E_0|^2}{2\epsilon_n\epsilon_p}\frac{k^2}{k_c^2}J_n'^2(\chi_{ni})
+\end{align}
+
+\subsubsection{腔壁损耗}
+（公式皆由AI给出，未验算）
+
+重要积分公式：
+\begin{align}
+    \int_0^a [J_n'^2(k_ca)+\frac{n^2}{k_c^2r^2}J_n^2(k_ca)]r\mathrm{d}r=\frac{a^2}{2}(1-\frac{n^2}{\chi'^2_{ni}})J_n^2(\chi'_{ni})
+\end{align}
+
+\begin{align}
+    &P_{s,TE}=\frac{R_s \pi a |H_0|^2J_n^2(\chi'_{ni})}{\epsilon_n}\left[  \frac{k_z^2a}{2k_c^2} \left(  1-\frac{n^2}{\chi'^2_{ni}}  \right) + \frac{L}{2}\left(  1 + \frac{n^2k_z^2}{k_c^4a^2}  \right)  \right]\\
+    &P_{s,TM}=\frac{R_s\pi a}{\epsilon_n}\left(  \frac{\omega \varepsilon E_0}{k_c}  \right)^2  J_n'^2(\chi_{ni})\left(\frac{a}{2}+\frac{L}{\epsilon_p}\right)
+\end{align}
+
+
+
+\subsubsection{品质因数}
+
+
 
 \section{第十一章：谐振腔链和空间谐波}
 
 \subsection{耦合谐振腔}
-多个谐振腔的耦合效应。
 
-\subsection{周期结构}
+\subsubsection{双腔系统}
+
+\subsubsection{N腔耦合模式的解}
+1、首尾整腔
+
+2、首尾半腔
+
+
+
+\subsection{无穷长均匀腔链}
+参数：
 \begin{itemize}
-    \item 布洛赫定理
-    \item 色散关系
-    \item 带隙结构
+    \item 纵向波数$\beta$或$k_z$；
+    \item 单个腔长度$p$；
+    \item 单个腔的空间谐波相角$\theta=\beta p$；
+    \item 耦合常数$\kappa$；
+    \item 扰动后的谐振频率$\omega=\omega_0\sqrt{1-2\kappa\cos\theta}\approx \omega_0(1-\kappa\cos\theta)$  
+    \item 相速度$v_p=\frac{\omega}{\beta}=\frac{\omega p}{\theta}$；
+    \item 群速度$v_g=\frac{\mathrm{d}\omega}{\mathrm{d}\beta}=\frac{p}{\mathrm{d}\theta}\frac{\mathrm{d}\omega}{\mathrm{d}\theta}=\kappa p \omega_0 \sin\theta$
 \end{itemize}
+
+\subsubsection{空间谐波}
+n次空间谐波的纵向波数：
+\begin{align}
+    \beta_n=\beta_0+\frac{2\pi n}{p }
+\end{align}
+各次空间谐波的群速度相同，相速度不同。
+
+\subsubsection{周期结构色散特性}
+\begin{itemize}
+    \item 结构有无穷多个$TE_{nmp}$和$TM_{nmp}$模式，每个模式有一条色散曲线，落在不同的频带；
+    \item 每一个$\omega_\theta$对应一个基波$\theta_0=\beta_0p$的色散模式，并由无穷多个高次空间谐波组成；
+    \item 色散曲线近似为余弦函数，以$2\pi$为周期重复；
+    \item $v_p$与$v_g$同向的波称为前向波，反向的称为返波。对于给定的色散曲线，按照基波区分是前向波结构还是返波结构。
+\end{itemize}
+
+\subsection{盘荷波导的解析求解}
+
+你要真考这玩意，我这10分给你了呗
+
+\subsubsection{无穷长均匀腔链}
+
+\subsubsection{短周期近似均匀系统}
+
+\subsubsection{短周期近似均匀系统（外周孔）}
+
+\subsection{褶皱结构}
+
+
+\subsubsection{开放平板褶皱结构}
+
+\subsubsection{封闭平板褶皱结构}
+
 
 \section{矢势和运动电荷的场}
 
 \subsection{电磁势}
 \begin{itemize}
-    \item 标势$\phi$和矢势$\mathbf{A}$的定义
-    \item 洛伦兹规范条件：$\nabla \cdot \mathbf{A} + \frac{1}{c^2}\frac{\partial \phi}{\partial t} = 0$
+    \item 标势$\phi$、矢势$\mathbf{A}$：
+    \begin{align}
+        &\mathbf{B}=\nabla \times \mathbf{A}\\
+        &\mathbf{E}=-\nabla \phi - \frac{\partial \mathbf{A}}{\partial t}
+    \end{align}
+    \item 洛伦兹规范条件：
+    \begin{align}
+    \nabla \cdot \mathbf{A} + \frac{1}{c^2}\frac{\partial \phi}{\partial t} = 0
+    \end{align}
 \end{itemize}
 
 \subsection{达朗贝尔方程}
-\begin{equation}
-    \nabla^2 \phi - \frac{1}{c^2}\frac{\partial^2 \phi}{\partial t^2} = -\frac{\rho}{\varepsilon_0}
-\end{equation}
+\begin{align}
+    &\nabla^2 \phi - \frac{1}{c^2}\frac{\partial^2 \phi}{\partial t^2} = -\frac{\rho}{\varepsilon_0}\\
+    &\nabla^2 \mathbf{A} - \frac{1}{c^2}\frac{\partial^2 \mathbf{A}}{\partial t^2} = -\mu_0 \mathbf{J}
+\end{align}
 
-\subsection{李纳-维谢尔势}
-运动电荷产生的电磁势。
+% \subsection{李纳-维谢尔势}
+% 运动电荷产生的电磁势。
 
-\section{运动电荷的场和同步辐射}
+\subsection{推迟势}
+\begin{align}
+    \phi(\mathbf{x},t)=&\int\frac{\rho(\mathbf{x}',t-\frac{r}{c})}{4\pi\varepsilon_0r}\mathrm{d}V'\\
+    \mathbf{A}(\mathbf{x},t)=&\int\frac{\mu_0\mathbf{J}(\mathbf{x}',t-\frac{r}{c})}{4\pi r}\mathrm{d}V'
+\end{align}
 
-\subsection{加速电荷的辐射}
-\begin{itemize}
-    \item 拉莫尔公式
-    \item 相对论性推广
-\end{itemize}
+\subsection{重要结论}
+
+\subsubsection{远场近似的偶极辐射}
+
+场分布：
+\begin{align}
+    \mathbf{B}=\frac{i\mu_0k}{4\pi r}e^{ikR}\hat{\mathbf{n}}\times \dot{\mathbf{p}}=\frac{1}{4\pi\varepsilon_0c^3R}\ddot{\mathbf{p}}\times\hat{\mathbf{n}}\\
+    \mathbf{E}=c\mathbf{B}\times \hat{\mathbf{n}}=\frac{1}{4\pi\varepsilon_0c^2R}(\ddot{\mathbf{p}}\times \hat{\mathbf{n}})\times \hat{\mathbf{n}}
+\end{align}
+
+能流和辐射功率：
+\begin{align}
+    \langle \mathbf{S} \rangle = \frac{1}{32\pi^2\varepsilon_0 c^3 R^2} |\ddot{\mathbf{p}}|^2 \sin^2\theta \hat{\mathbf{n}}\\
+    P=\frac{\mu_0}{6\pi c}|\ddot{\mathbf{p}}|^2
+\end{align}
+
+\section{相对论运动电荷的场和同步辐射}
+
+\subsection{相对论下运动电荷的辐射}
+\subsubsection{Lienard-Wiechert势}
+\begin{align}
+    \phi(\mathbf{x},t)=&\frac{1}{4\pi\varepsilon_0}\left[  \frac{q}{(1-\hat{\mathbf{n}}\cdot \mathbf{v}/c)R}  \right]_{ret}\\
+    \mathbf{A}(\mathbf{x},t)=&\frac{\mu_0}{4\pi}\left[  \frac{q\mathbf{v}}{(1-\hat{\mathbf{n}}\cdot \mathbf{v}/c)R}  \right]_{ret}
+\end{align}
+
+\subsubsection{推迟关系及变换关系导出的导数}
+推迟关系：
+\begin{align}
+    t'=t-\frac{r(t')}{c}
+\end{align}
+求导时，需要用隐函数求导方法得到导数结果：
+\begin{align}
+    \frac{\partial t'}{\partial t}=&\frac{1}{1-\hat{\mathbf{n}}\cdot \boldsymbol{\beta}(t')}\\
+    \nabla t'=&-\frac{\hat{\mathbf{n}}}{c(1-\hat{\mathbf{n}}\cdot \boldsymbol{\beta}(t'))}
+\end{align}
+
+\subsubsection{运动点电荷的场}
+
+场的表达式：
+\begin{align}
+    &\mathbf{E}=\frac{q}{\gamma^2\,4\pi\varepsilon_0r^2}\frac{\hat{\mathbf{n}-\boldsymbol{\beta}}}{(1-\hat{\mathbf{n}\cdot\boldsymbol{\beta}})^3}+\frac{q}{4\pi\varepsilon_0c^2r}\frac{\hat{\mathbf{n}}\times\left[ \left(  \hat{\mathbf{n}-\boldsymbol{\beta}} \right)\times\dot{\mathbf{v}}  \right]}{\left(1-\hat{\mathbf{n}\cdot\boldsymbol{\beta}}\right)^3}\\\
+    &\mathbf{B}=\hat{\mathbf{n}}\times \mathbf{E}
+\end{align}
+
+辐射功率：
+\begin{align}
+    &\mathbf{S}=\mathbf{E}\times\mathbf{H}=\varepsilon_0c|E_a|^2\hat{\mathbf{n}}\\
+    &\frac{\mathrm{d}P(t')}{\mathrm{d}\Omega}=r^2(\mathbf{S}\cdot\hat{\mathbf{n}})\frac{\partial t}{\partial t'}=\frac{q^2}{16\pi^2\varepsilon_0 c}\frac{|\hat{\mathbf{n}}\times\left[  (\hat{\mathbf{n}}-\boldsymbol{\beta})\times \dot{\boldsymbol{\beta}}  \right]|^2}{(1-\hat{\mathbf{n}}\cdot \boldsymbol{\beta})^5}
+\end{align}
+注意：推迟时间和观测时间中的辐射功率角分布不同，满足变换关系：
+\begin{align}
+    \frac{\mathrm{d}P(t)}{\mathrm{d}\Omega}=&\frac{\mathrm{d}P(t')}{\mathrm{d}\Omega}\frac{\partial t'}{\partial t}\\
+    \frac{\mathrm{d}P(t)}{\mathrm{d}\Omega}=&\frac{q^2}{16\pi^2\varepsilon_0 c}\frac{|\hat{\mathbf{n}}\times\left[  (\hat{\mathbf{n}}-\boldsymbol{\beta})\times \dot{\boldsymbol{\beta}}  \right]|^2}{(1-\hat{\mathbf{n}}\cdot \boldsymbol{\beta})^6}
+\end{align}
+
+
+\subsection{两种特殊情况下的辐射}
+\subsubsection{速度平行于加速度}
+$\mathbf{v}\parallel\dot{\mathbf{v}}$：
+\begin{align}
+    \frac{\mathrm{d}P(t')}{\mathrm{d}\Omega}=&\frac{e^2\dot{v}^2}{16\pi^2\varepsilon_0c^3}\frac{\sin^2\theta}{(1-\beta\cos\theta)^5}\\
+    P(t')=&\frac{e^2}{6\pi\varepsilon_0c^3}\gamma^6 \dot{v}^2
+\end{align}
+
+\subsubsection{速度垂直于加速度}
+$\mathbf{v}\perp\dot{\mathbf{v}}$：
+\begin{align}
+    \frac{\mathrm{d}P(t')}{\mathrm{d}\Omega}=&\frac{e^2\dot{v}^2}{16\pi^2\varepsilon_0c^3}\frac{(1-\beta\cos\theta)^2-\gamma^{-2}\sin^2\theta\cos^2\phi}{(1-\beta\cos\theta)^5}\\
+    P(t')=&\frac{e^2}{6\pi\varepsilon_0c^3}\gamma^4 \dot{v}^2
+\end{align}
+
+
 
 \subsection{同步辐射}
 \begin{itemize}
-    \item 同步辐射的特性
-    \item 角分布和频谱
-    \item 应用领域
+    \item 时间结构：每$T_0=2\pi R/c$发出一个脉冲，脉冲宽度约为$\Delta t \approx R/\gamma^3 c$；
+    \item 频谱结构：频谱宽度约为$\Delta \omega \approx \gamma^3 c/R$，中心频率约为$\omega_c \approx 3\gamma^3 c/2R$；
+    \item 角分布：辐射集中在一个开口角约为$1/\gamma$的锥形区域内。
+\end{itemize}
+
+\section{切轮科夫辐射}
+\begin{itemize}
+    \item 辐射条件：带电粒子速度$v$大于介质中光速$c/n$，即$\beta>1/n$；
+    \item 辐射角：$\cos\theta = \frac{1}{n\beta}$，\textbf{由于电子射程通常不大，可以认为仅在这个锥面上有光}
 \end{itemize}
 
 \section{重要公式汇总}
